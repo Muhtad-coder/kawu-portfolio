@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Sen. Kawu Sumaila OFR</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --background: #fcfbf8;
+    --foreground: #1c1410;
+    --cream: #f7f0e6;
+    --gold: #c79a45;
+    --primary: #8b0000;
+    --primary-foreground: #fcfbf8;
+    --secondary: #1c1310;
+    --secondary-foreground: #fcfbf8;
+    --muted-foreground: #6b6258;
+    --border: #e3ddd0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: 'Playfair Display', Georgia, serif; letter-spacing: -0.02em; }
+  .container { width: 100%; max-width: 1280px; margin-inline: auto; padding-inline: 1.5rem; }
+  a { text-decoration: none; color: inherit; }
+  em { font-style: italic; }
+
+  /* HEADER */
+  header { border-bottom: 1px solid var(--border); background: var(--background); }
+  .header-inner { display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 0; }
+  .brand { display: flex; flex-direction: column; line-height: 1.15; }
+  .brand-name { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.15rem; }
+  .brand-waraka { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.32em; text-transform: uppercase; color: var(--primary); margin-top: 3px; }
+  nav { display: flex; gap: 2rem; font-size: 0.85rem; font-weight: 500; }
+  nav a { color: var(--foreground); opacity: 0.8; transition: opacity 0.2s; }
+  nav a:hover { opacity: 1; color: var(--primary); }
+  nav a.active { opacity: 1; color: var(--primary); }
+
+  /* ABOUT CONTENT */
+  .about-grid { padding: 5rem 0; display: grid; grid-template-columns: 5fr 7fr; gap: 3.5rem; }
+  .portrait-frame { position: relative; aspect-ratio: 3/4; overflow: hidden; border: 1px solid rgba(199,154,69,0.3); background: #1c1310; }
+  .portrait-frame img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+  .about-label { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.25em; color: var(--primary); }
+  .about-content h1.about-title { margin-top: 0.75rem; font-size: 2.7rem; font-weight: 700; line-height: 1.15; }
+  .about-body { margin-top: 2rem; font-size: 1.08rem; line-height: 1.75; color: rgba(28,20,16,0.85); }
+  .about-body p { margin-bottom: 1.1rem; }
+
+  .info-grid { margin-top: 3rem; display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.75rem; }
+  .info-block { border-left: 2px solid var(--primary); padding-left: 1.25rem; }
+  .info-block .info-label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em; color: var(--muted-foreground); }
+  .info-block ul { margin-top: 0.6rem; list-style: none; font-size: 0.92rem; line-height: 1.65; }
+  .info-block li { margin-bottom: 0.3rem; }
+
+  .honours-box { margin-top: 3rem; border-left: 4px solid var(--gold); background: var(--cream); padding: 1.5rem 1.75rem; }
+  .honours-box .info-label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em; color: var(--primary); }
+  .honours-box p.honours-text { margin-top: 0.5rem; font-size: 0.92rem; line-height: 1.6; }
+
+  /* FOOTER */
+  footer { background: var(--background); padding: 3.5rem 0 2.5rem; border-top: 1px solid var(--border); }
+  .footer-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 2rem; }
+  .footer-brand .brand-name { font-size: 1.3rem; }
+  .footer-brand .brand-waraka { margin-top: 4px; }
+  .footer-brand p.tag { margin-top: 0.75rem; font-size: 0.85rem; color: var(--muted-foreground); max-width: 22rem; }
+  .footer-nav { display: flex; gap: 4rem; flex-wrap: wrap; }
+  .footer-nav h4 { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted-foreground); margin-bottom: 0.8rem; }
+  .footer-nav ul { list-style: none; font-size: 0.88rem; }
+  .footer-nav li { margin-bottom: 0.5rem; }
+  .footer-bottom { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--muted-foreground); flex-wrap: wrap; gap: 0.5rem; }
+
+  @media (max-width: 860px) {
+    nav { display: none; }
+    .about-grid { grid-template-columns: 1fr; padding: 3rem 0; }
+    .about-content h1.about-title { font-size: 2.1rem; }
+    .info-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container header-inner">
+    <a href="#" class="brand">
+      <span class="brand-name">Sen. Kawu Sumaila OFR</span>
+      <span class="brand-waraka">Waraka &mdash; Kano South Senatorial District</span>
+    </a>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#" class="active">About</a>
+      <a href="#">Achievements</a>
+      <a href="#">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="about-grid container">
+  <div class="portrait-frame">
+    <img src="assets/portrait.jpg" alt="Senator Kawu Sumaila in traditional attire">
+  </div>
+  <div class="about-content">
+    <p class="about-label">About</p>
+    <h1 class="about-title">From Sumaila Village to the Senate.</h1>
+    <div class="about-body">
+      <p>Suleiman Abdurrahman, popularly known as Kawu Sumaila (OFR), was born on 3 March 1968 in Sumaila Village, Kano State, to Alhaji Abdurrahman Tadu and Hajiya Maryam Muhammad. He is a Nigerian politician, businessman and school proprietor.</p>
+      <p>He represents Kano South Senatorial District at the 10th Nigerian National Assembly. Before his election to the Senate, he served three consecutive terms in the House of Representatives for Sumaila/Takai Federal Constituency, where he was Deputy Minority Leader of the 6th and 7th Houses.</p>
+      <p>Between 2015 and 2019 he served as Senior Special Assistant to President Muhammadu Buhari on House of Representatives Matters. In 2012 he was conferred with the national honour of the Order of the Federal Republic (OFR) by President Goodluck Jonathan, and in 2006 he received the traditional title of <em>Turakin Sumaila</em> from the Kano Emirate.</p>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-block">
+        <p class="info-label">Education</p>
+        <ul>
+          <li>PhD, Political Science &mdash; Al-Qalam University, Katsina</li>
+          <li>MSc, Political Science &mdash; Maryam Abacha American University</li>
+          <li>MSc, Developmental Studies &mdash; Bayero University, Kano</li>
+          <li>MSc, Leadership Studies &mdash; Nigerian Defence Academy</li>
+          <li>BA, Islamic Studies &mdash; National Open University of Nigeria</li>
+          <li>Executive certificates from Harvard, Oxford, Cambridge and Bayero University, Kano</li>
+        </ul>
+      </div>
+      <div class="info-block">
+        <p class="info-label">Career milestones</p>
+        <ul>
+          <li>Senator, Kano South (2023 &ndash; present)</li>
+          <li>Chairman, Senate Committee on Petroleum (Downstream)</li>
+          <li>Chairman, Senate Committee on Sports Development (2023)</li>
+          <li>SSA to President Buhari on NASS Matters (2015 &ndash; 2019)</li>
+          <li>Deputy Minority Leader, House of Reps (2007 &ndash; 2015)</li>
+          <li>Member, House of Reps &middot; Sumaila/Takai (2003 &ndash; 2015)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="honours-box">
+      <p class="info-label">Honours</p>
+      <p class="honours-text">Order of the Federal Republic (OFR), 2012 &middot; Turakin Sumaila (traditional title conferred by the Kano Emirate), 2006.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <p class="brand-name">Sen. Kawu Sumaila OFR</p>
+        <p class="brand-waraka">Waraka</p>
+        <p class="tag">Turakin Sumaila &middot; Senator for Kano South Senatorial District, Federal Republic of Nigeria.</p>
+      </div>
+      <div class="footer-nav">
+        <div>
+          <h4>Navigate</h4>
+          <ul>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Achievements</a></li>
+            <li><a href="#">Contact the Office</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Constituency office</h4>
+          <ul>
+            <li>Sumaila Town, Sumaila LGA</li>
+            <li>Kano State, Nigeria</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Office of Sen. Kawu Sumaila. All rights reserved.</span>
+      <span>Kano South &middot; National Assembly Complex, Abuja.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
