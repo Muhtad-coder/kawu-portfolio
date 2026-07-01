@@ -31,6 +31,7 @@ export default function Footer() {
         <div className="footer-bottom">
           <span>&copy; 2026 Office of Sen. Kawu Sumaila. All rights reserved.</span>
           <span>Kano South &middot; National Assembly Complex, Abuja.</span>
+          <span>Created by <a href="#" style={{ color: 'inherit', textDecoration: 'underline' }}>Swift Limited</a></span>
         </div>
       </div>
     </footer>
