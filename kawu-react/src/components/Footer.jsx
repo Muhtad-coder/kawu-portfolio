@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom'
+import { useLanguage } from '../contexts/LanguageContext'
 
 export default function Footer() {
+  const { t } = useLanguage()
   return (
     <footer>
       <div className="container">
@@ -8,30 +10,30 @@ export default function Footer() {
           <div className="footer-brand">
             <p className="brand-name">Sen. Kawu Sumaila OFR</p>
             <p className="brand-waraka">Waraka</p>
-            <p className="tag">Turakin Sumaila &middot; Senator for Kano South Senatorial District, Federal Republic of Nigeria.</p>
+            <p className="tag">{t.footer.tag}</p>
           </div>
           <div className="footer-nav">
             <div>
-              <h4>Navigate</h4>
+              <h4>{t.footer.navigate}</h4>
               <ul>
-                <li><Link to="/about">About</Link></li>
-                <li><Link to="/achievements">Achievements</Link></li>
-                <li><a href="#">Contact the Office</a></li>
+                <li><Link to="/about">{t.nav.about}</Link></li>
+                <li><Link to="/achievements">{t.nav.achievements}</Link></li>
+                <li><a href="#">{t.nav.contact}</a></li>
               </ul>
             </div>
             <div>
-              <h4>Constituency office</h4>
+              <h4>{t.footer.constituency}</h4>
               <ul>
-                <li>Sumaila Town, Sumaila LGA</li>
-                <li>Kano State, Nigeria</li>
+                <li>{t.footer.location1}</li>
+                <li>{t.footer.location2}</li>
               </ul>
             </div>
           </div>
         </div>
         <div className="footer-bottom">
-          <span>&copy; 2026 Office of Sen. Kawu Sumaila. All rights reserved.</span>
-          <span>Kano South &middot; National Assembly Complex, Abuja.</span>
-          <span>Created by <a href="#" style={{ color: 'inherit', textDecoration: 'underline' }}>Swift Limited</a></span>
+          <span>{t.footer.copyright}</span>
+          <span>{t.footer.abuja}</span>
+          <span>{t.footer.created_by} <a href="#" style={{ color: 'inherit', textDecoration: 'underline' }}>Swift Limited</a></span>
         </div>
       </div>
     </footer>

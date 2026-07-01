@@ -1,0 +1,64 @@
+const ha = {
+  nav: {
+    home: 'Gida',
+    about: 'Bayani',
+    achievements: 'Nasarori',
+    contact: 'Tuntu\u0253a',
+  },
+  hero: {
+    cta_record: 'Duba Rikodin \u2192',
+    cta_contact: 'Tuntu\u0253i Ofishi',
+  },
+  letter: {
+    label: 'Sak\u0253o daga Sanata',
+    signature: '\u2014 San. Suleiman Abdurrahman Kawu Sumaila, OFR',
+  },
+  home_achievements: {
+    label: 'Za\u0253a\u0253\u0253un Nasarori',
+    heading: 'Jagoranci a Majalisar \u0266asa.',
+    view_all: 'Duba duka \u2192',
+    card1_cat: 'Jagorancin Kwamiti',
+    card1_title: 'Kwamitin Majalisar Dattawa kan Man Fetur (\u0266asa)',
+    card1_summary: 'Yana shugabantar Kwamitin Majalisar Dattawa kan Man Fetur (\u0266asa), yana kula da masana\u2019a, rarrabawa, da manufofin bangaren man fetur na Najeriya.',
+    card1_period: 'Majalissar ta 10 \u00b7 2023 \u2013 yanzu',
+    card2_cat: 'Garambawul Kundin Tsarin Mulki',
+    card2_title: 'Kwaskwarimar Sashe na 145 na Kundin Tsarin Mulki',
+    card2_summary: 'Ya dauki nauyin aiki kan kwaskwarimar Sashe na 145 na Kundin Tsarin Mulki na 1999 don tanadin miƙa mulki cikin tsari idan shugaba ya kasa aiwatar da aikinsa.',
+    card2_period: 'Majalisar Wakilai \u00b7 2007 \u2013 2015',
+    card3_cat: 'Garambawul Doka',
+    card3_title: 'Cin Gashin Kai na Kudi ga Majalisun Jihohi',
+    card3_summary: 'Ya goyi bayan garambawulin da ya ba Majalisun Jihohi cin gashin kai na kudi, yana raba kudadensu daga ikon masu zartarwa na jihohi.',
+    card3_period: 'Majalisar Wakilai',
+  },
+  stats: {
+    terms: "Wa\u2019adin a Majalisar Wakilai",
+    deputy: "Mataimakin Shugaban \u2018Yan Tsiraru (6 & 7)",
+    assembly: 'Majalissar \u00b7 Sanata, Kudu Kano',
+    honour: 'Umarnin Jamhuriyar Tarayya, 2012',
+  },
+  about_page: {
+    label: 'Bayani',
+    education_label: 'Ilimi',
+    career_label: 'Tarihin Aiki',
+    honours_label: 'Kyaututtuka',
+  },
+  projects_page: {
+    eyebrow: 'Tarihin Aiki',
+    heading: 'Nasarori da Aikin Doka.',
+    lede: 'Daga Majalisar Wakilai ta 6 zuwa Majalisar Dattawa ta 10 \u2014 kudurorin da aka gabatar, motocin da aka \u0266addamar, da kwamitin da aka jagoranta a madadin mutanen Kudu Kano.',
+    footnote: 'An ta\u0253aita bayanai na tarihin rayuwa da na doka daga bayanan jama\u2019a, ciki har da shafin Wikipedia na Sanata. Don rikodin hukuma na kudurori da motoci, da fatan a tuntu\u0253i ofishi.',
+    loading: 'Ana \u0257aukewa\u2026',
+  },
+  footer: {
+    tag: 'Turakin Sumaila \u00b7 Sanata ga Mazabar Kudu Kano, Jamhuriyar Tarayya ta Najeriya.',
+    navigate: 'Kewayawa',
+    constituency: 'Ofishin Mazabar',
+    location1: 'Garin Sumaila, LGA Sumaila',
+    location2: 'Jihar Kano, Najeriya',
+    copyright: '\u00a9 2026 Ofishin San. Kawu Sumaila. Duk \u0257an \u2019yancin an kiyaye.',
+    abuja: 'Kudu Kano \u00b7 Ginin Majalisar \u0266asa, Abuja.',
+    created_by: 'Wanda ya \u0257aura',
+  },
+}
+
+export default ha

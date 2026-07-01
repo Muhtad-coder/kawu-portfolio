@@ -1,0 +1,64 @@
+const en = {
+  nav: {
+    home: 'Home',
+    about: 'About',
+    achievements: 'Achievements',
+    contact: 'Contact',
+  },
+  hero: {
+    cta_record: 'See the record \u2192',
+    cta_contact: 'Contact the office',
+  },
+  letter: {
+    label: 'A note from the Senator',
+    signature: '\u2014 Sen. Suleiman Abdurrahman Kawu Sumaila, OFR',
+  },
+  home_achievements: {
+    label: 'Selected achievements',
+    heading: 'Leadership in the National Assembly.',
+    view_all: 'View all \u2192',
+    card1_cat: 'Committee Leadership',
+    card1_title: 'Senate Committee on Petroleum (Downstream)',
+    card1_summary: 'Chairs the Senate Committee on Petroleum (Downstream), with oversight of refining, distribution and the policy direction of Nigeria\u2019s downstream oil and gas sector.',
+    card1_period: '10th Assembly \u00b7 2023 \u2013 present',
+    card2_cat: 'Constitutional Reform',
+    card2_title: 'Amendment of Section 145 of the Constitution',
+    card2_summary: 'Sponsored legislative work on the amendment of Section 145 of the 1999 Constitution to provide for orderly transfer of power in the event of incapacity of the principal.',
+    card2_period: 'House of Representatives \u00b7 2007 \u2013 2015',
+    card3_cat: 'Legislative Reform',
+    card3_title: 'Financial Autonomy for State Houses of Assembly',
+    card3_summary: 'Backed reforms granting State Houses of Assembly financial autonomy, separating their funding from the discretion of state executives.',
+    card3_period: 'House of Representatives',
+  },
+  stats: {
+    terms: 'Terms in the House of Representatives',
+    deputy: 'Deputy Minority Leader (6th \u0026 7th)',
+    assembly: 'Assembly \u00b7 Senator, Kano South',
+    honour: 'Order of the Federal Republic, 2012',
+  },
+  about_page: {
+    label: 'About',
+    education_label: 'Education',
+    career_label: 'Career milestones',
+    honours_label: 'Honours',
+  },
+  projects_page: {
+    eyebrow: 'The Record',
+    heading: 'Achievements \u0026 legislative work.',
+    lede: 'From the 6th House of Representatives to the 10th Senate \u2014 bills sponsored, motions moved, and committees led on behalf of the people of Kano South.',
+    footnote: 'Biographical and legislative details summarised from public records, including the Senator\u2019s Wikipedia entry. For an official record of bills and motions, please contact the office.',
+    loading: 'Loading\u2026',
+  },
+  footer: {
+    tag: 'Turakin Sumaila \u00b7 Senator for Kano South Senatorial District, Federal Republic of Nigeria.',
+    navigate: 'Navigate',
+    constituency: 'Constituency office',
+    location1: 'Sumaila Town, Sumaila LGA',
+    location2: 'Kano State, Nigeria',
+    copyright: '\u00a9 2026 Office of Sen. Kawu Sumaila. All rights reserved.',
+    abuja: 'Kano South \u00b7 National Assembly Complex, Abuja.',
+    created_by: 'Created by',
+  },
+}
+
+export default en

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import SEO from '../components/SEO'
+import { useLanguage } from '../contexts/LanguageContext'
 
 function CheckIcon() {
   return (
@@ -23,6 +24,7 @@ function CheckIcon() {
 export default function Projects() {
   const [achievements, setAchievements] = useState([])
   const [loading, setLoading] = useState(true)
+  const { t } = useLanguage()
 
   useEffect(() => {
     async function fetchAchievements() {
@@ -47,20 +49,16 @@ export default function Projects() {
       />
       <section className="projects-hero">
         <div className="container projects-hero-inner">
-          <p className="projects-eyebrow">The Record</p>
-          <h1>Achievements &amp; legislative work.</h1>
-          <p className="projects-lede">
-            From the 6th House of Representatives to the 10th Senate — bills
-            sponsored, motions moved, and committees led on behalf of the people
-            of Kano South.
-          </p>
+          <p className="projects-eyebrow">{t.projects_page.eyebrow}</p>
+          <h1>{t.projects_page.heading}</h1>
+          <p className="projects-lede">{t.projects_page.lede}</p>
         </div>
         <div className="projects-flag-stripe" />
       </section>
 
       <section className="container projects-list">
         {loading ? (
-          <p>Loading...</p>
+          <p>{t.projects_page.loading}</p>
         ) : (
           <div className="projects-articles">
             {achievements.map((p, i) => (
@@ -90,11 +88,7 @@ export default function Projects() {
           </div>
         )}
 
-        <p className="projects-footnote">
-          Biographical and legislative details summarised from public records,
-          including the Senator's Wikipedia entry. For an official record of
-          bills and motions, please contact the office.
-        </p>
+        <p className="projects-footnote">{t.projects_page.footnote}</p>
       </section>
     </>
   )

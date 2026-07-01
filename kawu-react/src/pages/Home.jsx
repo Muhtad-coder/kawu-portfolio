@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import SEO from '../components/SEO'
+import { useLanguage } from '../contexts/LanguageContext'
 
 const DEFAULTS = {
   home_eyebrow: 'Office of Senator Kawu Sumaila \u00b7 OFR',
@@ -10,12 +11,18 @@ const DEFAULTS = {
   home_hero_image: '/assets/rally.jpg',
   home_letter_title: 'The mandate of Kano South is sacred.',
   home_letter_body: 'From Sumaila Gabas Primary School to the floor of the Senate, my journey has been shaped by the people of Kano South \u2014 by their patience, their resilience and their unshakeable belief in a better future.\n\nAcross three terms in the House of Representatives, and now in the Senate of the 10th National Assembly, the work has remained the same: bring our share of national development home, and represent our values honestly in Abuja.\n\nThis site is a record of that work, and an open door to my office.',
+  home_eyebrow_ha: 'Ofishin Sanata Kawu Sumaila \u00b7 OFR',
+  home_title_ha: 'Hidima ga Kudu Kano,\ndaga Sumaila zuwa Abuja.',
+  home_lede_ha: "Wa\u2019adi uku a Majalisar Wakilai. Mataimakin Shugaban \u2018Yan Tsiraru na Majalisun 6 da 7. A yau, Sanata don mutanen Kudu Kano.",
+  home_letter_title_ha: 'Aikin da mutanen Kudu Kano suka ba ni mai tsarki ne.',
+  home_letter_body_ha: "Daga Makarantar Firamare ta Sumaila Gabas zuwa dandamalin Majalisar Dattawa, mutanen Kudu Kano ne suka tsara tafiyata \u2014 ta hanyar ha\u0253urinsu, \u0263arfinsu, da imanansu mar\u0323ar girg\u0323iza ga makomar da ta fi kyau.\n\nA cikin wa\u2019adi uku a Majalisar Wakilai, kuma yanzu a Majalisar Dattawa ta Majalisar \u0266asa ta 10, aikin ya kasance \u0257aya: kawo rabonmu na ci gaban \u0266asa gida, kuma mu wakilci \u0266imominmu da gaskiya a Abuja.\n\nWannan shafin tarihin wannan aiki ne, kuma \u0253ofa ce bu\u0257a\u0257\u0257iya zuwa ofishina.",
 }
 
 const KEYS = Object.keys(DEFAULTS)
 
 export default function Home() {
   const [content, setContent] = useState(DEFAULTS)
+  const { lang, t } = useLanguage()
 
   useEffect(() => {
     supabase.from('site_content').select('key, value').in('key', KEYS).then(({ data }) => {
@@ -27,7 +34,14 @@ export default function Home() {
     })
   }, [])
 
-  const letterParagraphs = content.home_letter_body.split(/\n\n+/).filter(Boolean)
+  const isHausa = lang === 'ha'
+  const eyebrow = isHausa ? content.home_eyebrow_ha : content.home_eyebrow
+  const title = isHausa ? content.home_title_ha : content.home_title
+  const lede = isHausa ? content.home_lede_ha : content.home_lede
+  const letterTitle = isHausa ? content.home_letter_title_ha : content.home_letter_title
+  const letterBody = isHausa ? content.home_letter_body_ha : content.home_letter_body
+
+  const letterParagraphs = letterBody.split(/\n\n+/).filter(Boolean)
 
   return (
     <>
@@ -44,13 +58,13 @@ export default function Home() {
         <div className="hero-bg-bottom"></div>
         <div className="container hero-inner">
           <div>
-            <p className="eyebrow">{content.home_eyebrow}</p>
-            <h1>{content.home_title}</h1>
-            <p className="lede">{content.home_lede}</p>
+            <p className="eyebrow">{eyebrow}</p>
+            <h1>{title}</h1>
+            <p className="lede">{lede}</p>
             <div className="waraka-seal">WARAKA</div>
             <div className="hero-cta">
-              <Link to="/about" className="btn btn-primary">See the record &rarr;</Link>
-              <a href="#" className="btn btn-outline">Contact the office</a>
+              <Link to="/about" className="btn btn-primary">{t.hero.cta_record}</Link>
+              <a href="#" className="btn btn-outline">{t.hero.cta_contact}</a>
             </div>
           </div>
         </div>
@@ -58,14 +72,14 @@ export default function Home() {
 
       <section className="container letter">
         <div>
-          <p className="label">A note from the Senator</p>
-          <h2>{content.home_letter_title}</h2>
+          <p className="label">{t.letter.label}</p>
+          <h2>{letterTitle}</h2>
         </div>
         <div className="letter-body">
           {letterParagraphs.map((p, i) => (
             <p key={i}>{p}</p>
           ))}
-          <p className="signature">&mdash; Sen. Suleiman Abdurrahman Kawu Sumaila, OFR</p>
+          <p className="signature">{t.letter.signature}</p>
         </div>
       </section>
 
@@ -73,37 +87,37 @@ export default function Home() {
         <div className="container">
           <div className="ach-head">
             <div>
-              <p className="label" style={{ color: '#8b0000' }}>Selected achievements</p>
-              <h2>Leadership in the National Assembly.</h2>
+              <p className="label" style={{ color: '#8b0000' }}>{t.home_achievements.label}</p>
+              <h2>{t.home_achievements.heading}</h2>
             </div>
-            <Link to="/achievements" className="ach-link">View all &rarr;</Link>
+            <Link to="/achievements" className="ach-link">{t.home_achievements.view_all}</Link>
           </div>
           <div className="ach-grid">
             <article className="ach-card">
               <div className="ach-img"></div>
               <div className="ach-content">
-                <p className="ach-cat">Committee Leadership</p>
-                <h3>Senate Committee on Petroleum (Downstream)</h3>
-                <p className="summary">Chairs the Senate Committee on Petroleum (Downstream), with oversight of refining, distribution and the policy direction of Nigeria's downstream oil and gas sector.</p>
-                <p className="ach-period">10th Assembly &middot; 2023 &ndash; present</p>
+                <p className="ach-cat">{t.home_achievements.card1_cat}</p>
+                <h3>{t.home_achievements.card1_title}</h3>
+                <p className="summary">{t.home_achievements.card1_summary}</p>
+                <p className="ach-period">{t.home_achievements.card1_period}</p>
               </div>
             </article>
             <article className="ach-card">
               <div className="ach-img"></div>
               <div className="ach-content">
-                <p className="ach-cat">Constitutional Reform</p>
-                <h3>Amendment of Section 145 of the Constitution</h3>
-                <p className="summary">Sponsored legislative work on the amendment of Section 145 of the 1999 Constitution to provide for orderly transfer of power in the event of incapacity of the principal.</p>
-                <p className="ach-period">House of Representatives &middot; 2007 &ndash; 2015</p>
+                <p className="ach-cat">{t.home_achievements.card2_cat}</p>
+                <h3>{t.home_achievements.card2_title}</h3>
+                <p className="summary">{t.home_achievements.card2_summary}</p>
+                <p className="ach-period">{t.home_achievements.card2_period}</p>
               </div>
             </article>
             <article className="ach-card">
               <div className="ach-img"></div>
               <div className="ach-content">
-                <p className="ach-cat">Legislative Reform</p>
-                <h3>Financial Autonomy for State Houses of Assembly</h3>
-                <p className="summary">Backed reforms granting State Houses of Assembly financial autonomy, separating their funding from the discretion of state executives.</p>
-                <p className="ach-period">House of Representatives</p>
+                <p className="ach-cat">{t.home_achievements.card3_cat}</p>
+                <h3>{t.home_achievements.card3_title}</h3>
+                <p className="summary">{t.home_achievements.card3_summary}</p>
+                <p className="ach-period">{t.home_achievements.card3_period}</p>
               </div>
             </article>
           </div>
@@ -115,19 +129,19 @@ export default function Home() {
         <div className="container stats-grid">
           <div className="stat">
             <div className="n">3</div>
-            <div className="l">Terms in the House of Representatives</div>
+            <div className="l">{t.stats.terms}</div>
           </div>
           <div className="stat">
             <div className="n">2&times;</div>
-            <div className="l">Deputy Minority Leader (6th &amp; 7th)</div>
+            <div className="l">{t.stats.deputy}</div>
           </div>
           <div className="stat">
             <div className="n">10th</div>
-            <div className="l">Assembly &middot; Senator, Kano South</div>
+            <div className="l">{t.stats.assembly}</div>
           </div>
           <div className="stat">
             <div className="n">OFR</div>
-            <div className="l">Order of the Federal Republic, 2012</div>
+            <div className="l">{t.stats.honour}</div>
           </div>
         </div>
       </section>

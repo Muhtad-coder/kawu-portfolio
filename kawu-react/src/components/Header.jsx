@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { useLanguage } from '../contexts/LanguageContext'
 
 export default function Header() {
   const location = useLocation()
   const [menuOpen, setMenuOpen] = useState(false)
+  const { lang, toggle, t } = useLanguage()
 
   const closeMenu = () => setMenuOpen(false)
 
@@ -15,27 +17,35 @@ export default function Header() {
           <span className="brand-waraka">Waraka &mdash; Kano South Senatorial District</span>
         </Link>
         <nav>
-          <Link to="/" className={location.pathname === '/' ? 'active' : ''}>Home</Link>
-          <Link to="/about" className={location.pathname === '/about' ? 'active' : ''}>About</Link>
-          <Link to="/achievements" className={location.pathname === '/achievements' ? 'active' : ''}>Achievements</Link>
-          <a href="#">Contact</a>
+          <Link to="/" className={location.pathname === '/' ? 'active' : ''}>{t.nav.home}</Link>
+          <Link to="/about" className={location.pathname === '/about' ? 'active' : ''}>{t.nav.about}</Link>
+          <Link to="/achievements" className={location.pathname === '/achievements' ? 'active' : ''}>{t.nav.achievements}</Link>
+          <a href="#">{t.nav.contact}</a>
+          <button className="lang-toggle" onClick={toggle} aria-label="Switch language">
+            {lang === 'en' ? 'HA' : 'EN'}
+          </button>
         </nav>
-        <button
-          className="hamburger"
-          aria-label="Toggle menu"
-          onClick={() => setMenuOpen(o => !o)}
-        >
-          <span className={`hamburger-line${menuOpen ? ' open' : ''}`}></span>
-          <span className={`hamburger-line${menuOpen ? ' open' : ''}`}></span>
-          <span className={`hamburger-line${menuOpen ? ' open' : ''}`}></span>
-        </button>
+        <div className="header-right">
+          <button className="lang-toggle" onClick={toggle} aria-label="Switch language">
+            {lang === 'en' ? 'HA' : 'EN'}
+          </button>
+          <button
+            className="hamburger"
+            aria-label="Toggle menu"
+            onClick={() => setMenuOpen(o => !o)}
+          >
+            <span className="hamburger-line"></span>
+            <span className="hamburger-line"></span>
+            <span className="hamburger-line"></span>
+          </button>
+        </div>
       </div>
       {menuOpen && (
         <nav className="mobile-nav">
-          <Link to="/" className={location.pathname === '/' ? 'active' : ''} onClick={closeMenu}>Home</Link>
-          <Link to="/about" className={location.pathname === '/about' ? 'active' : ''} onClick={closeMenu}>About</Link>
-          <Link to="/achievements" className={location.pathname === '/achievements' ? 'active' : ''} onClick={closeMenu}>Achievements</Link>
-          <a href="#" onClick={closeMenu}>Contact</a>
+          <Link to="/" className={location.pathname === '/' ? 'active' : ''} onClick={closeMenu}>{t.nav.home}</Link>
+          <Link to="/about" className={location.pathname === '/about' ? 'active' : ''} onClick={closeMenu}>{t.nav.about}</Link>
+          <Link to="/achievements" className={location.pathname === '/achievements' ? 'active' : ''} onClick={closeMenu}>{t.nav.achievements}</Link>
+          <a href="#" onClick={closeMenu}>{t.nav.contact}</a>
         </nav>
       )}
     </header>
