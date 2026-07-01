@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
+import ImageCropper from '../../components/ImageCropper'
 
 const inputStyle = { width: '100%', padding: '0.65rem', border: '1px solid #ddd', borderRadius: '4px', fontSize: '0.95rem', boxSizing: 'border-box', fontFamily: 'inherit' }
 const btn = (bg) => ({ background: bg, color: '#fff', border: 'none', padding: '0.65rem 1.25rem', borderRadius: '4px', cursor: 'pointer', fontWeight: 600, fontSize: '0.9rem' })
@@ -20,8 +21,9 @@ export default function AdminHome() {
   const [content, setContent] = useState({})
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
-  const [imageFile, setImageFile] = useState(null)
   const [saved, setSaved] = useState(false)
+  const [cropSrc, setCropSrc] = useState(null)
+  const [croppedBlob, setCroppedBlob] = useState(null)
 
   useEffect(() => { load() }, [])
 
@@ -37,10 +39,22 @@ export default function AdminHome() {
     setContent(c => ({ ...c, [key]: value }))
   }
 
-  async function uploadImage(file) {
-    const ext = file.name.split('.').pop()
-    const path = `home/${Date.now()}.${ext}`
-    const { error } = await supabase.storage.from('site-images').upload(path, file)
+  function handleFileSelect(e) {
+    const file = e.target.files[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = () => setCropSrc({ src: reader.result, filename: file.name })
+    reader.readAsDataURL(file)
+  }
+
+  function handleCropConfirm(blob) {
+    setCroppedBlob(blob)
+    setCropSrc(null)
+  }
+
+  async function uploadImage(blob, filename) {
+    const path = `home/${Date.now()}-${filename}`
+    const { error } = await supabase.storage.from('site-images').upload(path, blob, { contentType: 'image/jpeg' })
     if (error) return null
     const { data } = supabase.storage.from('site-images').getPublicUrl(path)
     return data.publicUrl
@@ -51,16 +65,15 @@ export default function AdminHome() {
     setSaving(true)
 
     let heroImage = content.home_hero_image
-    if (imageFile) heroImage = (await uploadImage(imageFile)) || heroImage
+    if (croppedBlob) heroImage = (await uploadImage(croppedBlob, cropSrc?.filename || 'hero.jpg')) || heroImage
 
     const updates = { ...content, home_hero_image: heroImage }
-
     const upserts = Object.entries(updates).map(([key, value]) => ({ key, value }))
     await supabase.from('site_content').upsert(upserts, { onConflict: 'key' })
 
     setSaving(false)
     setSaved(true)
-    setImageFile(null)
+    setCroppedBlob(null)
     setTimeout(() => setSaved(false), 3000)
     load()
   }
@@ -69,27 +82,35 @@ export default function AdminHome() {
 
   return (
     <div>
+      {cropSrc && (
+        <ImageCropper
+          imageSrc={cropSrc.src}
+          aspect={16 / 9}
+          onConfirm={handleCropConfirm}
+          onCancel={() => setCropSrc(null)}
+        />
+      )}
+
       <h1 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '2rem' }}>Home Page</h1>
       <form onSubmit={handleSave}>
-
         <div style={{ background: '#fff', padding: '2rem', borderRadius: '8px', marginBottom: '1.5rem', boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}>
           <h2 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '1.5rem', color: '#8b0000' }}>Hero Section</h2>
           <Field label="Eyebrow text">
             <input value={content.home_eyebrow || ''} onChange={e => set('home_eyebrow', e.target.value)} style={inputStyle} />
           </Field>
-          <Field label="Main heading (H1)">
+          <Field label="Main heading">
             <input value={content.home_title || ''} onChange={e => set('home_title', e.target.value)} style={inputStyle} />
           </Field>
           <Field label="Lede paragraph">
             <textarea value={content.home_lede || ''} onChange={e => set('home_lede', e.target.value)} rows={3} style={inputStyle} />
           </Field>
-          <Field label="Hero image" hint="Upload a new image or paste a URL below">
-            {content.home_hero_image && (
-              <img src={content.home_hero_image} alt="Current hero" style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', borderRadius: '4px', marginBottom: '0.75rem' }} />
+          <Field label="Hero image" hint="Upload and crop, or paste a URL">
+            {content.home_hero_image && !croppedBlob && (
+              <img src={content.home_hero_image} alt="Current hero" style={{ width: '100%', maxHeight: '180px', objectFit: 'cover', borderRadius: '4px', marginBottom: '0.75rem' }} />
             )}
+            {croppedBlob && <p style={{ fontSize: '0.82rem', color: 'green', marginBottom: '0.5rem' }}>Image cropped and ready to upload.</p>}
             <input value={content.home_hero_image || ''} onChange={e => set('home_hero_image', e.target.value)} placeholder="Image URL" style={{ ...inputStyle, marginBottom: '0.5rem' }} />
-            <input type="file" accept="image/*" onChange={e => setImageFile(e.target.files[0])} />
-            {imageFile && <p style={{ fontSize: '0.82rem', color: '#666', marginTop: '0.4rem' }}>Selected: {imageFile.name}</p>}
+            <input type="file" accept="image/*" onChange={handleFileSelect} />
           </Field>
         </div>
 

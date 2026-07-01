@@ -1,14 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { supabase } from '../../lib/supabase'
+import ImageCropper from '../../components/ImageCropper'
 
 const inputStyle = { width: '100%', padding: '0.65rem', border: '1px solid #ddd', borderRadius: '4px', fontSize: '0.95rem', boxSizing: 'border-box', fontFamily: 'inherit' }
 const btn = (bg) => ({ background: bg, color: '#fff', border: 'none', padding: '0.65rem 1.25rem', borderRadius: '4px', cursor: 'pointer', fontWeight: 600, fontSize: '0.9rem' })
 const smallBtn = (bg) => ({ ...btn(bg), padding: '0.4rem 0.8rem', fontSize: '0.82rem' })
 
-function Field({ label, children }) {
+function Field({ label, hint, children }) {
   return (
     <div style={{ marginBottom: '1rem' }}>
       <label style={{ display: 'block', marginBottom: '0.4rem', fontWeight: 500, fontSize: '0.88rem', color: '#444' }}>{label}</label>
+      {hint && <p style={{ fontSize: '0.8rem', color: '#888', marginBottom: '0.4rem' }}>{hint}</p>}
       {children}
     </div>
   )
@@ -23,7 +25,8 @@ export default function AdminAchievements() {
   const [editing, setEditing] = useState(null)
   const [showForm, setShowForm] = useState(false)
   const [saving, setSaving] = useState(false)
-  const [imageFile, setImageFile] = useState(null)
+  const [cropSrc, setCropSrc] = useState(null)
+  const [croppedBlob, setCroppedBlob] = useState(null)
 
   useEffect(() => { load() }, [])
 
@@ -33,20 +36,32 @@ export default function AdminAchievements() {
     setLoading(false)
   }
 
-  async function uploadImage(file) {
-    const ext = file.name.split('.').pop()
-    const path = `achievements/${Date.now()}.${ext}`
-    const { error } = await supabase.storage.from('site-images').upload(path, file)
+  async function uploadImage(blob, filename) {
+    const path = `achievements/${Date.now()}-${filename}`
+    const { error } = await supabase.storage.from('site-images').upload(path, blob, { contentType: 'image/jpeg' })
     if (error) return null
     const { data } = supabase.storage.from('site-images').getPublicUrl(path)
     return data.publicUrl
+  }
+
+  function handleFileSelect(e) {
+    const file = e.target.files[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = () => setCropSrc({ src: reader.result, filename: file.name })
+    reader.readAsDataURL(file)
+  }
+
+  function handleCropConfirm(blob) {
+    setCroppedBlob(blob)
+    setCropSrc(null)
   }
 
   async function handleSave(e) {
     e.preventDefault()
     setSaving(true)
     let imageUrl = form.image
-    if (imageFile) imageUrl = (await uploadImage(imageFile)) || imageUrl
+    if (croppedBlob) imageUrl = (await uploadImage(croppedBlob, cropSrc?.filename || 'image.jpg')) || imageUrl
 
     const payload = {
       ...form,
@@ -64,7 +79,7 @@ export default function AdminAchievements() {
     setForm(emptyForm)
     setEditing(null)
     setShowForm(false)
-    setImageFile(null)
+    setCroppedBlob(null)
     setSaving(false)
     load()
   }
@@ -86,13 +101,22 @@ export default function AdminAchievements() {
     setForm(emptyForm)
     setEditing(null)
     setShowForm(false)
-    setImageFile(null)
+    setCroppedBlob(null)
   }
 
   if (loading) return <p>Loading...</p>
 
   return (
     <div>
+      {cropSrc && (
+        <ImageCropper
+          imageSrc={cropSrc.src}
+          aspect={16 / 9}
+          onConfirm={handleCropConfirm}
+          onCancel={() => setCropSrc(null)}
+        />
+      )}
+
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
         <h1 style={{ fontSize: '1.5rem', fontWeight: 700 }}>Achievements</h1>
         {!showForm && (
@@ -121,10 +145,10 @@ export default function AdminAchievements() {
           <Field label="Impact points (one per line)">
             <textarea value={form.impact} onChange={e => setForm(f => ({ ...f, impact: e.target.value }))} rows={4} placeholder="One impact point per line" style={inputStyle} />
           </Field>
-          <Field label="Image">
-            <input value={form.image} onChange={e => setForm(f => ({ ...f, image: e.target.value }))} placeholder="Image URL (or upload below)" style={{ ...inputStyle, marginBottom: '0.5rem' }} />
-            <input type="file" accept="image/*" onChange={e => setImageFile(e.target.files[0])} />
-            {imageFile && <p style={{ fontSize: '0.82rem', color: '#666', marginTop: '0.4rem' }}>Selected: {imageFile.name}</p>}
+          <Field label="Image" hint="Upload and crop, or paste a URL">
+            <input value={form.image} onChange={e => setForm(f => ({ ...f, image: e.target.value }))} placeholder="Image URL" style={{ ...inputStyle, marginBottom: '0.5rem' }} />
+            <input type="file" accept="image/*" onChange={handleFileSelect} />
+            {croppedBlob && <p style={{ fontSize: '0.82rem', color: 'green', marginTop: '0.4rem' }}>Image cropped and ready to upload.</p>}
           </Field>
           <Field label="Order (lower = appears first)">
             <input type="number" value={form.order_index} onChange={e => setForm(f => ({ ...f, order_index: e.target.value }))} style={{ ...inputStyle, width: '120px' }} />
