@@ -1,19 +1,46 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { supabase } from '../lib/supabase'
+
+const DEFAULTS = {
+  home_eyebrow: 'Office of Senator Kawu Sumaila \u00b7 OFR',
+  home_title: 'Service to Kano South,\nfrom Sumaila to Abuja.',
+  home_lede: 'Three terms in the House of Representatives. Deputy Minority Leader of the 6th and 7th Assemblies. Today, Senator for the people of Kano South.',
+  home_hero_image: '/assets/rally.jpg',
+  home_letter_title: 'The mandate of Kano South is sacred.',
+  home_letter_body: 'From Sumaila Gabas Primary School to the floor of the Senate, my journey has been shaped by the people of Kano South \u2014 by their patience, their resilience and their unshakeable belief in a better future.\n\nAcross three terms in the House of Representatives, and now in the Senate of the 10th National Assembly, the work has remained the same: bring our share of national development home, and represent our values honestly in Abuja.\n\nThis site is a record of that work, and an open door to my office.',
+}
+
+const KEYS = Object.keys(DEFAULTS)
 
 export default function Home() {
+  const [content, setContent] = useState(DEFAULTS)
+
+  useEffect(() => {
+    supabase.from('site_content').select('key, value').in('key', KEYS).then(({ data }) => {
+      if (data?.length) {
+        const map = {}
+        data.forEach(({ key, value }) => { map[key] = value })
+        setContent(c => ({ ...c, ...map }))
+      }
+    })
+  }, [])
+
+  const letterParagraphs = content.home_letter_body.split(/\n\n+/).filter(Boolean)
+
   return (
     <>
       <section className="hero">
         <div className="hero-photo-bg">
-          <img src="/assets/rally.jpg" alt="Senator Kawu Sumaila greeting supporters at a Waraka rally" />
+          <img src={content.home_hero_image} alt="Senator Kawu Sumaila greeting supporters at a Waraka rally" />
         </div>
         <div className="hero-bg"></div>
         <div className="hero-bg-bottom"></div>
         <div className="container hero-inner">
           <div>
-            <p className="eyebrow">Office of Senator Kawu Sumaila &middot; OFR</p>
-            <h1>Service to Kano South,<br />from Sumaila to Abuja.</h1>
-            <p className="lede">Three terms in the House of Representatives. Deputy Minority Leader of the 6th and 7th Assemblies. Today, Senator for the people of Kano South.</p>
+            <p className="eyebrow">{content.home_eyebrow}</p>
+            <h1>{content.home_title}</h1>
+            <p className="lede">{content.home_lede}</p>
             <div className="waraka-seal">WARAKA</div>
             <div className="hero-cta">
               <Link to="/about" className="btn btn-primary">See the record &rarr;</Link>
@@ -26,12 +53,12 @@ export default function Home() {
       <section className="container letter">
         <div>
           <p className="label">A note from the Senator</p>
-          <h2>The mandate of Kano South is sacred.</h2>
+          <h2>{content.home_letter_title}</h2>
         </div>
         <div className="letter-body">
-          <p>From Sumaila Gabas Primary School to the floor of the Senate, my journey has been shaped by the people of Kano South &mdash; by their patience, their resilience and their unshakeable belief in a better future.</p>
-          <p>Across three terms in the House of Representatives, and now in the Senate of the 10th National Assembly, the work has remained the same: bring our share of national development home, and represent our values honestly in Abuja.</p>
-          <p>This site is a record of that work, and an open door to my office.</p>
+          {letterParagraphs.map((p, i) => (
+            <p key={i}>{p}</p>
+          ))}
           <p className="signature">&mdash; Sen. Suleiman Abdurrahman Kawu Sumaila, OFR</p>
         </div>
       </section>

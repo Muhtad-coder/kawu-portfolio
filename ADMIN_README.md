@@ -1,0 +1,126 @@
+# Admin Panel — Kawu Sumaila Portfolio
+
+## Accessing the Admin Panel
+
+Go to: `https://kawu-portfolio.vercel.app/admin/login`
+
+Log in with your admin email and password.
+
+---
+
+## Before First Use — Supabase Setup
+
+Run the following SQL in your Supabase **SQL Editor** to set up the required tables and storage:
+
+```sql
+-- 1. site_content table (stores Home & About page text/images)
+create table site_content (
+  key text primary key,
+  value text,
+  updated_at timestamptz default now()
+);
+
+alter table site_content enable row level security;
+create policy "Public read" on site_content for select using (true);
+create policy "Auth write" on site_content for all using (auth.role() = 'authenticated');
+
+-- 2. Allow authenticated users to write to achievements
+create policy "Auth write" on achievements for all using (auth.role() = 'authenticated');
+
+-- 3. Storage bucket for uploaded images
+insert into storage.buckets (id, name, public) values ('site-images', 'site-images', true);
+
+create policy "Public read images" on storage.objects for select using (bucket_id = 'site-images');
+create policy "Auth upload images" on storage.objects for insert with check (bucket_id = 'site-images' and auth.role() = 'authenticated');
+create policy "Auth update images" on storage.objects for update using (bucket_id = 'site-images' and auth.role() = 'authenticated');
+create policy "Auth delete images" on storage.objects for delete using (bucket_id = 'site-images' and auth.role() = 'authenticated');
+```
+
+Then create your admin user in Supabase:
+- Go to **Authentication → Users → Invite user**
+- Enter your email address
+- Check your email and set your password
+
+---
+
+## Managing Achievements
+
+Go to **Admin → Achievements**
+
+### Adding an achievement
+1. Click **+ Add Achievement**
+2. Fill in all fields:
+   - **Slug** — unique ID, lowercase, no spaces (e.g. `petroleum-downstream`)
+   - **Category** — e.g. "Committee Leadership"
+   - **Title** — the achievement title
+   - **Period** — e.g. "10th Assembly · 2023 – present"
+   - **Summary** — one paragraph description
+   - **Impact points** — one bullet point per line
+   - **Image** — paste a URL or upload an image file
+   - **Order** — controls display order (1 = first, 2 = second, etc.)
+3. Click **Save**
+
+### Editing an achievement
+1. Find the achievement in the list
+2. Click **Edit**
+3. Update any fields
+4. Click **Save**
+
+### Deleting an achievement
+1. Click **Delete** next to the achievement
+2. Confirm the deletion
+
+### Reordering achievements
+Edit each achievement and update the **Order** number. Lower numbers appear first.
+
+---
+
+## Editing the Home Page
+
+Go to **Admin → Home Page**
+
+### Hero Section
+- **Eyebrow text** — small text above the main heading
+- **Main heading** — the large H1 title
+- **Lede paragraph** — introductory paragraph below the heading
+- **Hero image** — upload a new photo or paste a URL
+
+### Letter Section
+- **Letter title** — the "note from the Senator" heading
+- **Letter body** — the letter text. Separate paragraphs with a blank line.
+
+Click **Save Changes** when done.
+
+---
+
+## Editing the About Page
+
+Go to **Admin → About Page**
+
+### Profile
+- **Page title** — the main About page heading
+- **Portrait image** — upload a new portrait photo or paste a URL
+- **Bio** — the Senator's biography. Separate paragraphs with a blank line.
+
+### Education & Career
+- **Education** — list of qualifications, one per line
+- **Career milestones** — list of career highlights, one per line
+
+### Honours
+- **Honours text** — awards and titles, as plain text
+
+Click **Save Changes** when done.
+
+---
+
+## Uploading Images
+
+Images can be uploaded directly from the admin forms (Hero image, Portrait, Achievement image). Supported formats: JPG, PNG, WebP.
+
+Uploaded images are stored in Supabase Storage and served publicly. Once uploaded, the URL is saved automatically.
+
+---
+
+## Logging Out
+
+Click **Logout** at the bottom of the left sidebar.
