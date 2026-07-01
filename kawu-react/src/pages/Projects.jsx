@@ -1,4 +1,5 @@
-import { projects } from '../data/projects'
+import { useEffect, useState } from 'react'
+import { supabase } from '../lib/supabase'
 
 function CheckIcon() {
   return (
@@ -19,6 +20,23 @@ function CheckIcon() {
 }
 
 export default function Projects() {
+  const [achievements, setAchievements] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function fetchAchievements() {
+      const { data, error } = await supabase
+        .from('achievements')
+        .select('*')
+        .order('order_index', { ascending: true })
+
+      if (!error) setAchievements(data)
+      setLoading(false)
+    }
+
+    fetchAchievements()
+  }, [])
+
   return (
     <>
       <section className="projects-hero">
@@ -35,32 +53,36 @@ export default function Projects() {
       </section>
 
       <section className="container projects-list">
-        <div className="projects-articles">
-          {projects.map((p, i) => (
-            <article
-              key={p.slug}
-              className={`project-article${i % 2 === 1 ? ' project-article--reverse' : ''}`}
-            >
-              <div className="project-img-wrap">
-                <img src={p.image} alt={p.title} loading="lazy" />
-              </div>
-              <div className="project-body">
-                <p className="project-cat">{p.category}</p>
-                <h2 className="project-title">{p.title}</h2>
-                <p className="project-period">{p.period}</p>
-                <p className="project-summary">{p.summary}</p>
-                <ul className="project-impact">
-                  {p.impact.map((line) => (
-                    <li key={line}>
-                      <CheckIcon />
-                      <span>{line}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </article>
-          ))}
-        </div>
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <div className="projects-articles">
+            {achievements.map((p, i) => (
+              <article
+                key={p.slug}
+                className={`project-article${i % 2 === 1 ? ' project-article--reverse' : ''}`}
+              >
+                <div className="project-img-wrap">
+                  <img src={p.image} alt={p.title} loading="lazy" />
+                </div>
+                <div className="project-body">
+                  <p className="project-cat">{p.category}</p>
+                  <h2 className="project-title">{p.title}</h2>
+                  <p className="project-period">{p.period}</p>
+                  <p className="project-summary">{p.summary}</p>
+                  <ul className="project-impact">
+                    {p.impact.map((line) => (
+                      <li key={line}>
+                        <CheckIcon />
+                        <span>{line}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </article>
+            ))}
+          </div>
+        )}
 
         <p className="projects-footnote">
           Biographical and legislative details summarised from public records,
