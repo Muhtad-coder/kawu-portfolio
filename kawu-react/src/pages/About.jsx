@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
+import SEO from '../components/SEO'
 
 const DEFAULTS = {
   about_title: 'From Sumaila Village to the Senate.',
@@ -30,6 +31,13 @@ export default function About() {
   const career = content.about_career.split('\n').filter(Boolean)
 
   return (
+    <>
+    <SEO
+      title="About"
+      description="Senator Suleiman Abdurrahman Kawu Sumaila OFR — Senator for Kano South, former Deputy Minority Leader of the House of Representatives, and recipient of the Order of the Federal Republic."
+      image="/assets/portrait.jpg"
+      path="/about"
+    />
     <section className="about-grid container">
       <div className="portrait-frame">
         <img src={content.about_portrait} alt="Senator Kawu Sumaila in traditional attire" />
@@ -62,5 +70,6 @@ export default function About() {
         </div>
       </div>
     </section>
+    </>
   )
 }

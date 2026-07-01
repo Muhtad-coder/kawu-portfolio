@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import SEO from '../components/SEO'
 
 const DEFAULTS = {
   home_eyebrow: 'Office of Senator Kawu Sumaila \u00b7 OFR',
@@ -30,6 +31,11 @@ export default function Home() {
 
   return (
     <>
+      <SEO
+        description="Three terms in the House of Representatives. Deputy Minority Leader of the 6th and 7th Assemblies. Today, Senator for the people of Kano South."
+        image="/assets/rally.jpg"
+        path="/"
+      />
       <section className="hero">
         <div className="hero-photo-bg">
           <img src={content.home_hero_image} alt="Senator Kawu Sumaila greeting supporters at a Waraka rally" />

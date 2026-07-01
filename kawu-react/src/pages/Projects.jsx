@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
+import SEO from '../components/SEO'
 
 function CheckIcon() {
   return (
@@ -39,6 +40,11 @@ export default function Projects() {
 
   return (
     <>
+      <SEO
+        title="Achievements"
+        description="From the 6th House of Representatives to the 10th Senate — bills sponsored, motions moved, and committees led on behalf of the people of Kano South."
+        path="/achievements"
+      />
       <section className="projects-hero">
         <div className="container projects-hero-inner">
           <p className="projects-eyebrow">The Record</p>
