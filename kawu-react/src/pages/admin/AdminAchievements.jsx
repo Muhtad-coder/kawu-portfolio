@@ -16,7 +16,9 @@ function Field({ label, hint, children }) {
   )
 }
 
-const emptyForm = { slug: '', category: '', title: '', period: '', summary: '', impact: '', image: '', order_index: 0 }
+const CONTENT_TYPES = ['Bill', 'Motion', 'Petition', 'Committee Work']
+
+const emptyForm = { slug: '', category: '', title: '', period: '', summary: '', impact: '', image: '', order_index: 0, content_type: '' }
 
 export default function AdminAchievements() {
   const [achievements, setAchievements] = useState([])
@@ -25,6 +27,7 @@ export default function AdminAchievements() {
   const [editing, setEditing] = useState(null)
   const [showForm, setShowForm] = useState(false)
   const [saving, setSaving] = useState(false)
+  const [error, setError] = useState('')
   const [cropSrc, setCropSrc] = useState(null)
   const [croppedBlob, setCroppedBlob] = useState(null)
 
@@ -59,6 +62,7 @@ export default function AdminAchievements() {
 
   async function handleSave(e) {
     e.preventDefault()
+    setError('')
     setSaving(true)
     let imageUrl = form.image
     if (croppedBlob) imageUrl = (await uploadImage(croppedBlob, cropSrc?.filename || 'image.jpg')) || imageUrl
@@ -70,10 +74,14 @@ export default function AdminAchievements() {
       order_index: Number(form.order_index),
     }
 
-    if (editing) {
-      await supabase.from('achievements').update(payload).eq('id', editing)
-    } else {
-      await supabase.from('achievements').insert(payload)
+    const { error: saveError } = editing
+      ? await supabase.from('achievements').update(payload).eq('id', editing)
+      : await supabase.from('achievements').insert(payload)
+
+    if (saveError) {
+      setError(saveError.message.includes('duplicate') ? 'That slug is already in use — please choose a unique one.' : saveError.message)
+      setSaving(false)
+      return
     }
 
     setForm(emptyForm)
@@ -85,9 +93,10 @@ export default function AdminAchievements() {
   }
 
   function handleEdit(a) {
-    setForm({ ...a, impact: a.impact.join('\n') })
+    setForm({ ...a, impact: a.impact.join('\n'), content_type: a.content_type || '' })
     setEditing(a.id)
     setShowForm(true)
+    setError('')
     window.scrollTo(0, 0)
   }
 
@@ -102,6 +111,7 @@ export default function AdminAchievements() {
     setEditing(null)
     setShowForm(false)
     setCroppedBlob(null)
+    setError('')
   }
 
   if (loading) return <p>Loading...</p>
@@ -127,11 +137,20 @@ export default function AdminAchievements() {
       {showForm && (
         <form onSubmit={handleSave} style={{ background: '#fff', padding: '2rem', borderRadius: '8px', marginBottom: '2rem', boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}>
           <h2 style={{ marginBottom: '1.5rem', fontSize: '1.1rem', fontWeight: 600 }}>{editing ? 'Edit Achievement' : 'New Achievement'}</h2>
+
+          {error && <p style={{ background: '#fdeaea', color: '#c00', padding: '0.75rem 1rem', borderRadius: '4px', marginBottom: '1.25rem', fontSize: '0.88rem' }}>{error}</p>}
+
           <Field label="Slug (unique ID, no spaces e.g. petroleum-downstream)">
             <input value={form.slug} onChange={e => setForm(f => ({ ...f, slug: e.target.value }))} required style={inputStyle} />
           </Field>
           <Field label="Category">
             <input value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value }))} placeholder="e.g. Committee Leadership" style={inputStyle} />
+          </Field>
+          <Field label="Content type" hint="Used by the filter chips on the public Achievements page">
+            <select value={form.content_type} onChange={e => setForm(f => ({ ...f, content_type: e.target.value }))} style={inputStyle}>
+              <option value="">— unset —</option>
+              {CONTENT_TYPES.map(ct => <option key={ct} value={ct}>{ct}</option>)}
+            </select>
           </Field>
           <Field label="Title">
             <input value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} required style={inputStyle} />
@@ -165,7 +184,7 @@ export default function AdminAchievements() {
           <div key={a.id} style={{ background: '#fff', padding: '1.25rem 1.5rem', borderRadius: '8px', boxShadow: '0 1px 4px rgba(0,0,0,0.08)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
             <div>
               <p style={{ fontWeight: 600, marginBottom: '0.2rem' }}>{a.title}</p>
-              <p style={{ color: '#666', fontSize: '0.83rem' }}>{a.category} · {a.period} · Order: {a.order_index}</p>
+              <p style={{ color: '#666', fontSize: '0.83rem' }}>{a.category} · {a.content_type || 'No type'} · {a.period} · Order: {a.order_index}</p>
             </div>
             <div style={{ display: 'flex', gap: '0.5rem', flexShrink: 0 }}>
               <button onClick={() => handleEdit(a)} style={smallBtn('#444')}>Edit</button>

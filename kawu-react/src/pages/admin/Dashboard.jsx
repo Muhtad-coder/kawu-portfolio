@@ -3,8 +3,10 @@ import { supabase } from '../../lib/supabase'
 
 const navItems = [
   { path: '/admin/achievements', label: 'Achievements' },
+  { path: '/admin/news', label: 'News' },
   { path: '/admin/home', label: 'Home Page' },
   { path: '/admin/about', label: 'About Page' },
+  { path: '/admin/messages', label: 'Messages' },
 ]
 
 export default function Dashboard() {

@@ -64,7 +64,7 @@ export default function Home() {
             <div className="waraka-seal">WARAKA</div>
             <div className="hero-cta">
               <Link to="/about" className="btn btn-primary">{t.hero.cta_record}</Link>
-              <a href="#" className="btn btn-outline">{t.hero.cta_contact}</a>
+              <Link to="/contact" className="btn btn-outline">{t.hero.cta_contact}</Link>
             </div>
           </div>
         </div>
