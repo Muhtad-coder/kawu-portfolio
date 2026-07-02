@@ -131,6 +131,70 @@ Click **Publish** or **Unpublish** next to any post in the list to toggle it liv
 ### Editing or deleting a post
 Click **Edit** to update any field, or **Delete** to remove a post permanently (confirm when prompted).
 
+### Optional: sample news posts
+To preview the News section with content right away, run this in the Supabase **SQL Editor** after creating the `news_posts` table. It adds five sample posts — a mix of published/draft and with/without image or video — reusing the existing site images. Feel free to edit or delete them afterwards from **Admin → News**.
+
+```sql
+insert into news_posts (slug, title, date, excerpt, body, featured_image, youtube_url, category, status) values
+(
+  'senate-committee-holds-downstream-briefing',
+  'Senate Committee Holds Briefing on Downstream Oil and Gas Reforms',
+  current_date - interval '2 days',
+  'The Committee on Petroleum (Downstream) met with sector stakeholders to review the pace of ongoing reforms.',
+  E'The Senate Committee on Petroleum (Downstream), chaired by Sen. Kawu Sumaila, convened a stakeholder briefing today to review progress on downstream oil and gas reforms.\n\nRepresentatives from regulatory agencies and industry associations presented updates on refining capacity, distribution logistics and pricing transparency.\n\nThe Committee will reconvene next month to review implementation timelines.',
+  '/assets/rally.jpg',
+  'https://www.youtube.com/watch?v=jNQXAC9IVRw',
+  'Update',
+  'published'
+),
+(
+  'statement-on-flood-relief-coordination',
+  'Statement on Flood Relief Coordination in Kano South',
+  current_date - interval '9 days',
+  'A statement on the office''s ongoing coordination with state emergency agencies on flood relief.',
+  E'Following recent flooding in parts of Kano South, this office has been in close contact with the State Emergency Management Agency to coordinate relief efforts.\n\nWe continue to monitor the situation and will provide further updates as support reaches affected communities.',
+  null,
+  null,
+  'Statement',
+  'published'
+),
+(
+  'senator-featured-in-national-assembly-review',
+  'Senator Featured in National Assembly Legislative Review',
+  current_date - interval '16 days',
+  'Coverage of the Senator''s legislative work from the 6th House of Representatives to the 10th Senate.',
+  E'A recent legislative review featured Sen. Kawu Sumaila''s record across three terms in the House of Representatives and his current work in the Senate.\n\nThe review highlighted his role in committee leadership and constitutional reform efforts.',
+  '/assets/portrait.jpg',
+  null,
+  'Media Coverage',
+  'published'
+),
+(
+  'announcement-constituency-office-hours',
+  'Announcement: Updated Constituency Office Hours',
+  current_date - interval '20 days',
+  'Updated hours for constituents visiting the Sumaila and Abuja offices.',
+  E'This office wishes to inform constituents of updated visiting hours at both the Sumaila Town constituency office and the National Assembly Complex office in Abuja.\n\nPlease contact the office in advance to schedule a visit.',
+  null,
+  null,
+  'Announcement',
+  'published'
+),
+(
+  'draft-upcoming-town-hall',
+  'Draft: Upcoming Town Hall with Kano South Constituents',
+  current_date + interval '5 days',
+  'Planning notes for an upcoming town hall meeting — not yet ready to publish.',
+  E'Draft notes for an upcoming town hall meeting with constituents. Details to be confirmed before publishing.',
+  null,
+  null,
+  'Announcement',
+  'draft'
+);
+```
+
+The last row is saved as a **draft** on purpose — it will show up in **Admin → News** but should not appear on the public `/news` page until you click **Publish**.
+
 ---
 
 ## Editing the Home Page
