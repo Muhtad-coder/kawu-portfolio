@@ -22,6 +22,7 @@ const KEYS = Object.keys(DEFAULTS)
 
 export default function Home() {
   const [content, setContent] = useState(DEFAULTS)
+  const [heroImageReady, setHeroImageReady] = useState(false)
   const { lang, t } = useLanguage()
 
   useEffect(() => {
@@ -31,6 +32,7 @@ export default function Home() {
         data.forEach(({ key, value }) => { map[key] = value })
         setContent(c => ({ ...c, ...map }))
       }
+      setHeroImageReady(true)
     })
   }, [])
 
@@ -52,7 +54,9 @@ export default function Home() {
       />
       <section className="hero">
         <div className="hero-photo-bg">
-          <img src={content.home_hero_image} alt="Senator Kawu Sumaila greeting supporters at a Waraka rally" />
+          {heroImageReady && (
+            <img src={content.home_hero_image} alt="Senator Kawu Sumaila greeting supporters at a Waraka rally" />
+          )}
         </div>
         <div className="hero-bg"></div>
         <div className="hero-bg-bottom"></div>
