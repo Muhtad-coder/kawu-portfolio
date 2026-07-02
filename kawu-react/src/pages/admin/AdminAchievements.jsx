@@ -27,6 +27,7 @@ export default function AdminAchievements() {
   const [editing, setEditing] = useState(null)
   const [showForm, setShowForm] = useState(false)
   const [saving, setSaving] = useState(false)
+  const [error, setError] = useState('')
   const [cropSrc, setCropSrc] = useState(null)
   const [croppedBlob, setCroppedBlob] = useState(null)
 
@@ -61,6 +62,7 @@ export default function AdminAchievements() {
 
   async function handleSave(e) {
     e.preventDefault()
+    setError('')
     setSaving(true)
     let imageUrl = form.image
     if (croppedBlob) imageUrl = (await uploadImage(croppedBlob, cropSrc?.filename || 'image.jpg')) || imageUrl
@@ -72,10 +74,14 @@ export default function AdminAchievements() {
       order_index: Number(form.order_index),
     }
 
-    if (editing) {
-      await supabase.from('achievements').update(payload).eq('id', editing)
-    } else {
-      await supabase.from('achievements').insert(payload)
+    const { error: saveError } = editing
+      ? await supabase.from('achievements').update(payload).eq('id', editing)
+      : await supabase.from('achievements').insert(payload)
+
+    if (saveError) {
+      setError(saveError.message.includes('duplicate') ? 'That slug is already in use — please choose a unique one.' : saveError.message)
+      setSaving(false)
+      return
     }
 
     setForm(emptyForm)
@@ -90,6 +96,7 @@ export default function AdminAchievements() {
     setForm({ ...a, impact: a.impact.join('\n'), content_type: a.content_type || '' })
     setEditing(a.id)
     setShowForm(true)
+    setError('')
     window.scrollTo(0, 0)
   }
 
@@ -104,6 +111,7 @@ export default function AdminAchievements() {
     setEditing(null)
     setShowForm(false)
     setCroppedBlob(null)
+    setError('')
   }
 
   if (loading) return <p>Loading...</p>
@@ -129,6 +137,9 @@ export default function AdminAchievements() {
       {showForm && (
         <form onSubmit={handleSave} style={{ background: '#fff', padding: '2rem', borderRadius: '8px', marginBottom: '2rem', boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}>
           <h2 style={{ marginBottom: '1.5rem', fontSize: '1.1rem', fontWeight: 600 }}>{editing ? 'Edit Achievement' : 'New Achievement'}</h2>
+
+          {error && <p style={{ background: '#fdeaea', color: '#c00', padding: '0.75rem 1rem', borderRadius: '4px', marginBottom: '1.25rem', fontSize: '0.88rem' }}>{error}</p>}
+
           <Field label="Slug (unique ID, no spaces e.g. petroleum-downstream)">
             <input value={form.slug} onChange={e => setForm(f => ({ ...f, slug: e.target.value }))} required style={inputStyle} />
           </Field>
