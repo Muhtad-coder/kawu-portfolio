@@ -21,9 +21,13 @@ function CheckIcon() {
   )
 }
 
+const CONTENT_TYPES = ['All', 'Bill', 'Motion', 'Petition', 'Committee Work']
+const CONTENT_TYPE_KEYS = { All: 'filter_all', Bill: 'filter_bill', Motion: 'filter_motion', Petition: 'filter_petition', 'Committee Work': 'filter_committee' }
+
 export default function Projects() {
   const [achievements, setAchievements] = useState([])
   const [loading, setLoading] = useState(true)
+  const [activeType, setActiveType] = useState('All')
   const { t } = useLanguage()
 
   useEffect(() => {
@@ -39,6 +43,8 @@ export default function Projects() {
 
     fetchAchievements()
   }, [])
+
+  const filtered = activeType === 'All' ? achievements : achievements.filter(p => p.content_type === activeType)
 
   return (
     <>
@@ -60,36 +66,54 @@ export default function Projects() {
         {loading ? (
           <p>{t.projects_page.loading}</p>
         ) : (
-          <div className="projects-articles">
-            {achievements.map((p, i) => (
-              <article
-                key={p.slug}
-                className={`project-article${i % 2 === 1 ? ' project-article--reverse' : ''}`}
-              >
-                <div className="project-img-wrap">
-                  {p.image ? (
-                    <img src={p.image} alt={p.title} loading="lazy" />
-                  ) : (
-                    <div className="project-img-fallback" />
-                  )}
-                </div>
-                <div className="project-body">
-                  <p className="project-cat">{p.category}</p>
-                  <h2 className="project-title">{p.title}</h2>
-                  <p className="project-period">{p.period}</p>
-                  <p className="project-summary">{p.summary}</p>
-                  <ul className="project-impact">
-                    {p.impact.map((line) => (
-                      <li key={line}>
-                        <CheckIcon />
-                        <span>{line}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </article>
-            ))}
-          </div>
+          <>
+            <div className="projects-chips">
+              {CONTENT_TYPES.map(type => (
+                <button
+                  key={type}
+                  type="button"
+                  className={`chip${activeType === type ? ' chip--active' : ''}`}
+                  onClick={() => setActiveType(type)}
+                >
+                  {t.projects_page[CONTENT_TYPE_KEYS[type]]}
+                </button>
+              ))}
+            </div>
+            {filtered.length === 0 ? (
+              <p className="projects-empty">{t.projects_page.no_results}</p>
+            ) : (
+              <div className="projects-articles">
+                {filtered.map((p, i) => (
+                  <article
+                    key={p.slug}
+                    className={`project-article${i % 2 === 1 ? ' project-article--reverse' : ''}`}
+                  >
+                    <div className="project-img-wrap">
+                      {p.image ? (
+                        <img src={p.image} alt={p.title} loading="lazy" />
+                      ) : (
+                        <div className="project-img-fallback" />
+                      )}
+                    </div>
+                    <div className="project-body">
+                      <p className="project-cat">{p.category}</p>
+                      <h2 className="project-title">{p.title}</h2>
+                      <p className="project-period">{p.period}</p>
+                      <p className="project-summary">{p.summary}</p>
+                      <ul className="project-impact">
+                        {p.impact.map((line) => (
+                          <li key={line}>
+                            <CheckIcon />
+                            <span>{line}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            )}
+          </>
         )}
 
         <p className="projects-footnote">{t.projects_page.footnote}</p>

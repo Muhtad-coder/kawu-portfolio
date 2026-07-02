@@ -49,6 +49,12 @@ const en = {
     lede: 'From the 6th House of Representatives to the 10th Senate \u2014 bills sponsored, motions moved, and committees led on behalf of the people of Kano South.',
     footnote: 'Biographical and legislative details summarised from public records, including the Senator\u2019s Wikipedia entry. For an official record of bills and motions, please contact the office.',
     loading: 'Loading\u2026',
+    filter_all: 'All',
+    filter_bill: 'Bill',
+    filter_motion: 'Motion',
+    filter_petition: 'Petition',
+    filter_committee: 'Committee Work',
+    no_results: 'No achievements match this filter yet.',
   },
   news_page: {
     eyebrow: 'News & Updates',

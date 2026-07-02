@@ -49,6 +49,12 @@ const ha = {
     lede: 'Daga Majalisar Wakilai ta 6 zuwa Majalisar Dattawa ta 10 \u2014 kudurorin da aka gabatar, motocin da aka \u0266addamar, da kwamitin da aka jagoranta a madadin mutanen Kudu Kano.',
     footnote: 'An ta\u0253aita bayanai na tarihin rayuwa da na doka daga bayanan jama\u2019a, ciki har da shafin Wikipedia na Sanata. Don rikodin hukuma na kudurori da motoci, da fatan a tuntu\u0253i ofishi.',
     loading: 'Ana \u0257aukewa\u2026',
+    filter_all: 'Duka',
+    filter_bill: 'Kudiri',
+    filter_motion: 'Motsi',
+    filter_petition: 'Koke',
+    filter_committee: 'Aikin Kwamiti',
+    no_results: 'Babu wata nasara da ta dace da wannan tacewa tukuna.',
   },
   news_page: {
     eyebrow: 'Labarai da Sabuntawa',

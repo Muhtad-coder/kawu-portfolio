@@ -78,6 +78,18 @@ Then create your admin user in Supabase:
 
 ---
 
+## One-time: Add Content Type to Achievements
+
+Run this once in the Supabase **SQL Editor** to enable the filter chips (All / Bill / Motion / Petition / Committee Work) on the public Achievements page. It only adds a new column — none of your existing achievements are changed or lost, they just start out with no content type set (shown under "All" until you tag them):
+
+```sql
+alter table achievements add column content_type text;
+```
+
+Safe to run even if you're not sure whether it's already been added — running it a second time will simply fail with a harmless "column already exists" error.
+
+---
+
 ## Managing Achievements
 
 Go to **Admin → Achievements**
@@ -92,6 +104,7 @@ Go to **Admin → Achievements**
    - **Summary** — one paragraph description
    - **Impact points** — one bullet point per line
    - **Image** — paste a URL or upload an image file
+   - **Content type** — Bill, Motion, Petition, or Committee Work. Powers the filter chips (All / Bill / Motion / Petition / Committee Work) on the public Achievements page. Leave unset ("— unset —") if none apply — the entry will still show under "All".
    - **Order** — controls display order (1 = first, 2 = second, etc.)
 3. Click **Save**
 

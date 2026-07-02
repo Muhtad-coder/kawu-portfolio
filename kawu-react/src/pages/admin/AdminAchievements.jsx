@@ -16,7 +16,9 @@ function Field({ label, hint, children }) {
   )
 }
 
-const emptyForm = { slug: '', category: '', title: '', period: '', summary: '', impact: '', image: '', order_index: 0 }
+const CONTENT_TYPES = ['Bill', 'Motion', 'Petition', 'Committee Work']
+
+const emptyForm = { slug: '', category: '', title: '', period: '', summary: '', impact: '', image: '', order_index: 0, content_type: '' }
 
 export default function AdminAchievements() {
   const [achievements, setAchievements] = useState([])
@@ -85,7 +87,7 @@ export default function AdminAchievements() {
   }
 
   function handleEdit(a) {
-    setForm({ ...a, impact: a.impact.join('\n') })
+    setForm({ ...a, impact: a.impact.join('\n'), content_type: a.content_type || '' })
     setEditing(a.id)
     setShowForm(true)
     window.scrollTo(0, 0)
@@ -133,6 +135,12 @@ export default function AdminAchievements() {
           <Field label="Category">
             <input value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value }))} placeholder="e.g. Committee Leadership" style={inputStyle} />
           </Field>
+          <Field label="Content type" hint="Used by the filter chips on the public Achievements page">
+            <select value={form.content_type} onChange={e => setForm(f => ({ ...f, content_type: e.target.value }))} style={inputStyle}>
+              <option value="">— unset —</option>
+              {CONTENT_TYPES.map(ct => <option key={ct} value={ct}>{ct}</option>)}
+            </select>
+          </Field>
           <Field label="Title">
             <input value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} required style={inputStyle} />
           </Field>
@@ -165,7 +173,7 @@ export default function AdminAchievements() {
           <div key={a.id} style={{ background: '#fff', padding: '1.25rem 1.5rem', borderRadius: '8px', boxShadow: '0 1px 4px rgba(0,0,0,0.08)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
             <div>
               <p style={{ fontWeight: 600, marginBottom: '0.2rem' }}>{a.title}</p>
-              <p style={{ color: '#666', fontSize: '0.83rem' }}>{a.category} · {a.period} · Order: {a.order_index}</p>
+              <p style={{ color: '#666', fontSize: '0.83rem' }}>{a.category} · {a.content_type || 'No type'} · {a.period} · Order: {a.order_index}</p>
             </div>
             <div style={{ display: 'flex', gap: '0.5rem', flexShrink: 0 }}>
               <button onClick={() => handleEdit(a)} style={smallBtn('#444')}>Edit</button>

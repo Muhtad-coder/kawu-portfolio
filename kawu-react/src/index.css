@@ -161,6 +161,12 @@ footer { background: var(--background); padding: 3.5rem 0 2.5rem; border-top: 1p
 .projects-flag-stripe { height: 5px; background: linear-gradient(90deg, #008751 33.3%, #fcfbf8 33.3% 66.6%, #008751 66.6%); }
 
 .projects-list { padding-block: 5rem; }
+.projects-chips { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 3rem; }
+.chip { background: none; border: 1px solid var(--border); color: var(--foreground); font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.5rem 1.1rem; cursor: pointer; transition: background 0.2s, color 0.2s, border-color 0.2s; }
+.chip:hover { border-color: var(--primary); color: var(--primary); }
+.chip--active { background: var(--primary); border-color: var(--primary); color: var(--primary-foreground); }
+.chip--active:hover { color: var(--primary-foreground); }
+.projects-empty { color: var(--muted-foreground); font-size: 1rem; padding-block: 2rem; }
 .projects-articles { display: flex; flex-direction: column; gap: 5rem; }
 
 .project-article { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: center; }
