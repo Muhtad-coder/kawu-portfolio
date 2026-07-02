@@ -121,6 +121,9 @@ Go to **Admin → Achievements**
 ### Reordering achievements
 Edit each achievement and update the **Order** number. Lower numbers appear first.
 
+### Homepage "Selected achievements"
+The 3 achievements with the lowest **Order** number also appear in the "Selected achievements" section on the homepage — reordering achievements here controls both places at once. There's no separate setting for the homepage.
+
 ---
 
 ## Managing News

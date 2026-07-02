@@ -85,7 +85,8 @@ nav a.active { opacity: 1; color: var(--primary); }
 .ach-link { font-size: 0.82rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #4a3a2a; white-space: nowrap; }
 .ach-grid { margin-top: 2.5rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
 .ach-card { background: var(--background); box-shadow: 0 1px 2px rgba(0,0,0,0.04); display: flex; flex-direction: column; }
-.ach-img { aspect-ratio: 4/3; background: linear-gradient(135deg, #3a2620, #1c1310); }
+.ach-img { aspect-ratio: 4/3; overflow: hidden; background: linear-gradient(135deg, #3a2620, #1c1310); }
+.ach-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .ach-content { padding: 1.5rem; }
 .ach-cat { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--primary); }
 .ach-content h3 { font-size: 1.35rem; font-weight: 700; margin-top: 0.6rem; line-height: 1.3; }

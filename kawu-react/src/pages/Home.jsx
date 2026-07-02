@@ -23,6 +23,7 @@ const KEYS = Object.keys(DEFAULTS)
 export default function Home() {
   const [content, setContent] = useState(DEFAULTS)
   const [heroImageReady, setHeroImageReady] = useState(false)
+  const [featuredAchievements, setFeaturedAchievements] = useState([])
   const { lang, t } = useLanguage()
 
   useEffect(() => {
@@ -33,6 +34,10 @@ export default function Home() {
         setContent(c => ({ ...c, ...map }))
       }
       setHeroImageReady(true)
+    })
+
+    supabase.from('achievements').select('*').order('order_index', { ascending: true }).limit(3).then(({ data }) => {
+      setFeaturedAchievements(data || [])
     })
   }, [])
 
@@ -97,33 +102,19 @@ export default function Home() {
             <Link to="/achievements" className="ach-link">{t.home_achievements.view_all}</Link>
           </div>
           <div className="ach-grid">
-            <article className="ach-card">
-              <div className="ach-img"></div>
-              <div className="ach-content">
-                <p className="ach-cat">{t.home_achievements.card1_cat}</p>
-                <h3>{t.home_achievements.card1_title}</h3>
-                <p className="summary">{t.home_achievements.card1_summary}</p>
-                <p className="ach-period">{t.home_achievements.card1_period}</p>
-              </div>
-            </article>
-            <article className="ach-card">
-              <div className="ach-img"></div>
-              <div className="ach-content">
-                <p className="ach-cat">{t.home_achievements.card2_cat}</p>
-                <h3>{t.home_achievements.card2_title}</h3>
-                <p className="summary">{t.home_achievements.card2_summary}</p>
-                <p className="ach-period">{t.home_achievements.card2_period}</p>
-              </div>
-            </article>
-            <article className="ach-card">
-              <div className="ach-img"></div>
-              <div className="ach-content">
-                <p className="ach-cat">{t.home_achievements.card3_cat}</p>
-                <h3>{t.home_achievements.card3_title}</h3>
-                <p className="summary">{t.home_achievements.card3_summary}</p>
-                <p className="ach-period">{t.home_achievements.card3_period}</p>
-              </div>
-            </article>
+            {featuredAchievements.map((a) => (
+              <article className="ach-card" key={a.slug}>
+                <div className="ach-img">
+                  {a.image && <img src={a.image} alt={a.title} loading="lazy" />}
+                </div>
+                <div className="ach-content">
+                  <p className="ach-cat">{a.category}</p>
+                  <h3>{a.title}</h3>
+                  <p className="summary">{a.summary}</p>
+                  <p className="ach-period">{a.period}</p>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
