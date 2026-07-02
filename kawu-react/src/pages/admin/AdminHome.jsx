@@ -15,7 +15,7 @@ function Field({ label, hint, children }) {
   )
 }
 
-const KEYS = ['home_eyebrow', 'home_title', 'home_lede', 'home_hero_image', 'home_letter_title', 'home_letter_body']
+const KEYS = ['home_eyebrow', 'home_title', 'home_lede', 'home_hero_image', 'home_constituency_projects', 'home_letter_title', 'home_letter_body']
 
 export default function AdminHome() {
   const [content, setContent] = useState({})
@@ -111,6 +111,13 @@ export default function AdminHome() {
             {croppedBlob && <p style={{ fontSize: '0.82rem', color: 'green', marginBottom: '0.5rem' }}>Image cropped and ready to upload.</p>}
             <input value={content.home_hero_image || ''} onChange={e => set('home_hero_image', e.target.value)} placeholder="Image URL" style={{ ...inputStyle, marginBottom: '0.5rem' }} />
             <input type="file" accept="image/*" onChange={handleFileSelect} />
+          </Field>
+        </div>
+
+        <div style={{ background: '#fff', padding: '2rem', borderRadius: '8px', marginBottom: '1.5rem', boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}>
+          <h2 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '1.5rem', color: '#8b0000' }}>Legislative Record</h2>
+          <Field label="Constituency projects completed" hint="Bills and Motions counters are automatic, based on your Achievements data — only this number is set manually">
+            <input type="number" min="0" value={content.home_constituency_projects || ''} onChange={e => set('home_constituency_projects', e.target.value)} style={{ ...inputStyle, width: '160px' }} />
           </Field>
         </div>
 

@@ -25,6 +25,14 @@ function FacebookIcon() {
   )
 }
 
+function LinkedInIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M6.94 8.5H3.56V21h3.38V8.5ZM5.25 3a1.95 1.95 0 1 0 0 3.9 1.95 1.95 0 0 0 0-3.9ZM21 21v-6.87c0-3.68-1.96-5.39-4.58-5.39-2.11 0-3.05 1.16-3.58 1.98V8.5H9.46c.04.98 0 12.5 0 12.5h3.38v-6.98c0-.37.03-.75.14-1.02.3-.75 1-1.53 2.16-1.53 1.53 0 2.14 1.16 2.14 2.87V21H21Z" />
+    </svg>
+  )
+}
+
 export default function Footer() {
   const { t } = useLanguage()
   return (
@@ -36,9 +44,10 @@ export default function Footer() {
             <p className="brand-waraka">Waraka</p>
             <p className="tag">{t.footer.tag}</p>
             <div className="social-links">
-              <a href="#" aria-label="Instagram"><InstagramIcon /></a>
-              <a href="#" aria-label="X (Twitter)"><XIcon /></a>
-              <a href="#" aria-label="Facebook"><FacebookIcon /></a>
+              <a href="https://www.instagram.com/sakawu_sumaila?igsh=MTMzeDJzZWd6Znhp" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><InstagramIcon /></a>
+              <a href="https://x.com/sakawusumaila?s=21&t=i31VjnYCpcFH4Rei1xRbhg" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)"><XIcon /></a>
+              <a href="https://www.facebook.com/share/1BRdCHgXz9/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><FacebookIcon /></a>
+              <a href="https://www.linkedin.com/in/kawu-abdurahaman-sumaila-a94a51130?utm_source=share_via&utm_content=profile&utm_medium=member_ios" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><LinkedInIcon /></a>
             </div>
           </div>
           <div className="footer-nav">
