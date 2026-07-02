@@ -227,6 +227,11 @@ Go to **Admin → Home Page**
 - **Letter title** — the "note from the Senator" heading
 - **Letter body** — the letter text. Separate paragraphs with a blank line.
 
+### Legislative Record
+A "by the numbers" section on the homepage, with each number counting up from 0 when scrolled into view.
+- **Bills Sponsored** and **Motions Sponsored** are automatic — they count achievements tagged `Bill` / `Motion` (via the Content Type field in **Admin → Achievements**). No setting here controls them.
+- **Constituency projects completed** is the one manually-typed number in this section.
+
 Click **Save Changes** when done.
 
 ---

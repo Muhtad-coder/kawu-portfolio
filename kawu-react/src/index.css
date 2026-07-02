@@ -101,6 +101,15 @@ nav a.active { opacity: 1; color: var(--primary); }
 .stat .n { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 2.8rem; color: var(--gold); }
 .stat .l { margin-top: 0.4rem; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.06em; color: rgba(252,251,248,0.7); }
 
+/* LEGISLATIVE RECORD */
+.legislative-record { background: var(--cream); padding-block: 6rem; }
+.legislative-record .label { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.25em; }
+.legislative-record h2 { margin-top: 0.5rem; font-size: 2.4rem; font-weight: 700; }
+.record-grid { margin-top: 2.5rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; }
+.record-stat { border-left: 2px solid var(--primary); padding-left: 1.25rem; }
+.record-stat .n { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 3.2rem; color: var(--primary); }
+.record-stat .l { margin-top: 0.4rem; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted-foreground); }
+
 /* ABOUT */
 .about-grid { padding: 5rem 0; display: grid; grid-template-columns: 5fr 7fr; gap: 3.5rem; }
 .portrait-frame { position: relative; aspect-ratio: 3/4; overflow: hidden; border: 1px solid rgba(199,154,69,0.3); background: #1c1310; }
@@ -287,6 +296,8 @@ footer { background: var(--background); padding: 3.5rem 0 2.5rem; border-top: 1p
   .letter { grid-template-columns: 1fr; }
   .ach-grid { grid-template-columns: 1fr; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .record-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .record-stat .n { font-size: 2.4rem; }
   .about-grid { grid-template-columns: 1fr; padding: 3rem 0; }
   .about-content h1.about-title { font-size: 2.1rem; }
   .info-grid { grid-template-columns: 1fr; }

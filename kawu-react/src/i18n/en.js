@@ -25,6 +25,13 @@ const en = {
     assembly: 'Assembly \u00b7 Senator, Kano South',
     honour: 'Order of the Federal Republic, 2012',
   },
+  legislative_record: {
+    label: 'The Record',
+    heading: 'Legislative record, by the numbers.',
+    bills: 'Bills Sponsored',
+    motions: 'Motions Sponsored',
+    projects: 'Constituency Projects Completed',
+  },
   about_page: {
     label: 'About',
     education_label: 'Education',

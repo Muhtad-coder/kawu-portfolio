@@ -25,6 +25,13 @@ const ha = {
     assembly: 'Majalissar \u00b7 Sanata, Kudu Kano',
     honour: 'Umarnin Jamhuriyar Tarayya, 2012',
   },
+  legislative_record: {
+    label: 'Rikodin Majalisa',
+    heading: 'Rikodin majalisa, ta lambobi.',
+    bills: 'Kudirorin da aka Gabatar',
+    motions: 'Motsin da aka Gabatar',
+    projects: 'Ayyukan Mazaba da aka Kammala',
+  },
   about_page: {
     label: 'Bayani',
     education_label: 'Ilimi',
