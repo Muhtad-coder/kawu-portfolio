@@ -305,12 +305,25 @@ footer { background: var(--background); padding: 3.5rem 0 2.5rem; border-top: 1p
    point toward where the subject sits rather than a plain center crop. */
 @media (max-width: 768px) {
   .hero-photo-bg img { object-position: 72% 64%; }
-  .hero-inner { min-height: 58vh; }
+  .hero-inner {
+    min-height: 75vh;
+    padding-top: 64px;
+    padding-bottom: 64px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .hero-inner > div { max-width: 36ch; }
+  .hero h1 { font-size: clamp(2.2rem, 7vw, 3.2rem); line-height: 0.95; letter-spacing: -0.02em; }
+  .hero p.lede { margin-top: 12px; max-width: 34ch; font-size: 0.95rem; line-height: 1.55; }
+  .waraka-seal { margin-top: 12px; }
+  .hero-cta { margin-top: 12px; }
+
+  .stats-grid { padding-block: 2.75rem; gap: 1.75rem; }
+  .stat .n { font-size: 2.3rem; }
 }
 
 @media (max-width: 480px) {
   .hero-photo-bg img { object-position: 76% 60%; }
-  .hero-inner { min-height: 54vh; padding-top: 2rem; padding-bottom: 2rem; }
   .hero-bg-bottom { background: linear-gradient(0deg, #1c1310 0%, rgba(28,19,16,0) 60%); }
   .hero-cta .btn { padding: 0.7rem 1.3rem; font-size: 0.76rem; }
 }
