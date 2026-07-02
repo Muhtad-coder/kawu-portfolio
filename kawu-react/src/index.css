@@ -169,6 +169,7 @@ footer { background: var(--background); padding: 3.5rem 0 2.5rem; border-top: 1p
 
 .project-img-wrap { overflow: hidden; aspect-ratio: 3/2; background: var(--secondary); }
 .project-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.project-img-fallback { width: 100%; height: 100%; background: linear-gradient(135deg, #3a2620, #1c1310); }
 
 .project-cat { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.2em; color: var(--primary); }
 .project-title { margin-top: 0.6rem; font-size: 2.1rem; font-weight: 700; line-height: 1.2; }

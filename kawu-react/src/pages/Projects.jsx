@@ -67,7 +67,11 @@ export default function Projects() {
                 className={`project-article${i % 2 === 1 ? ' project-article--reverse' : ''}`}
               >
                 <div className="project-img-wrap">
-                  <img src={p.image} alt={p.title} loading="lazy" />
+                  {p.image ? (
+                    <img src={p.image} alt={p.title} loading="lazy" />
+                  ) : (
+                    <div className="project-img-fallback" />
+                  )}
                 </div>
                 <div className="project-body">
                   <p className="project-cat">{p.category}</p>
