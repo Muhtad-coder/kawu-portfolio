@@ -20,7 +20,7 @@ export default function Header() {
           <Link to="/" className={location.pathname === '/' ? 'active' : ''}>{t.nav.home}</Link>
           <Link to="/about" className={location.pathname === '/about' ? 'active' : ''}>{t.nav.about}</Link>
           <Link to="/achievements" className={location.pathname === '/achievements' ? 'active' : ''}>{t.nav.achievements}</Link>
-          <a href="#">{t.nav.contact}</a>
+          <Link to="/contact" className={location.pathname === '/contact' ? 'active' : ''}>{t.nav.contact}</Link>
           <button className="lang-toggle" onClick={toggle} aria-label="Switch language">
             {lang === 'en' ? 'HA' : 'EN'}
           </button>
@@ -45,7 +45,7 @@ export default function Header() {
           <Link to="/" className={location.pathname === '/' ? 'active' : ''} onClick={closeMenu}>{t.nav.home}</Link>
           <Link to="/about" className={location.pathname === '/about' ? 'active' : ''} onClick={closeMenu}>{t.nav.about}</Link>
           <Link to="/achievements" className={location.pathname === '/achievements' ? 'active' : ''} onClick={closeMenu}>{t.nav.achievements}</Link>
-          <a href="#" onClick={closeMenu}>{t.nav.contact}</a>
+          <Link to="/contact" className={location.pathname === '/contact' ? 'active' : ''} onClick={closeMenu}>{t.nav.contact}</Link>
         </nav>
       )}
     </header>

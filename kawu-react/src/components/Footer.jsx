@@ -18,7 +18,7 @@ export default function Footer() {
               <ul>
                 <li><Link to="/about">{t.nav.about}</Link></li>
                 <li><Link to="/achievements">{t.nav.achievements}</Link></li>
-                <li><a href="#">{t.nav.contact}</a></li>
+                <li><Link to="/contact">{t.nav.contact}</Link></li>
               </ul>
             </div>
             <div>
@@ -32,8 +32,8 @@ export default function Footer() {
         </div>
         <div className="footer-bottom">
           <span>{t.footer.copyright}</span>
-          <span>{t.footer.abuja}</span>
           <span>{t.footer.created_by} <a href="#" style={{ color: 'inherit', textDecoration: 'underline' }}>Swift Limited</a></span>
+          <span>{t.footer.abuja}</span>
         </div>
       </div>
     </footer>

@@ -105,6 +105,25 @@ nav a.active { opacity: 1; color: var(--primary); }
 .honours-box .info-label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em; color: var(--primary); }
 .honours-box p.honours-text { margin-top: 0.5rem; font-size: 0.92rem; line-height: 1.6; }
 
+/* CONTACT */
+.contact-page { padding: 5rem 0; display: grid; grid-template-columns: 5fr 7fr; gap: 3.5rem; align-items: start; }
+.contact-title { margin-top: 0.75rem; font-size: 2.7rem; font-weight: 700; line-height: 1.15; }
+.contact-lede { margin-top: 1.5rem; font-size: 1.08rem; line-height: 1.75; color: rgba(28,20,16,0.85); max-width: 30rem; }
+.contact-offices { margin-top: 2.5rem; }
+.contact-form { background: var(--cream); border: 1px solid var(--border); padding: 2.5rem; }
+.form-field { margin-bottom: 1.4rem; }
+.form-field label { display: block; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; color: var(--muted-foreground); margin-bottom: 0.5rem; }
+.form-field input,
+.form-field textarea { width: 100%; padding: 0.8rem 1rem; border: 1px solid var(--border); background: var(--background); color: var(--foreground); font-family: inherit; font-size: 0.95rem; transition: border-color 0.2s; }
+.form-field input:focus,
+.form-field textarea:focus { outline: none; border-color: var(--primary); }
+.form-field textarea { resize: vertical; }
+.contact-submit { border: none; cursor: pointer; font-family: inherit; }
+.contact-submit:disabled { opacity: 0.6; cursor: default; }
+.form-status { margin-top: 1.25rem; font-size: 0.9rem; line-height: 1.55; padding: 0.85rem 1rem; border-left: 4px solid; }
+.form-status--success { border-color: #008751; background: rgba(0,135,81,0.08); color: #005936; }
+.form-status--error { border-color: var(--primary); background: rgba(139,0,0,0.07); color: var(--primary); }
+
 /* FOOTER */
 footer { background: var(--background); padding: 3.5rem 0 2.5rem; border-top: 1px solid var(--border); }
 .footer-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 2rem; }
@@ -213,6 +232,9 @@ footer { background: var(--background); padding: 3.5rem 0 2.5rem; border-top: 1p
   .about-grid { grid-template-columns: 1fr; padding: 3rem 0; }
   .about-content h1.about-title { font-size: 2.1rem; }
   .info-grid { grid-template-columns: 1fr; }
+  .contact-page { grid-template-columns: 1fr; padding: 3rem 0; gap: 2.5rem; }
+  .contact-title { font-size: 2.1rem; }
+  .contact-form { padding: 1.5rem; }
   .projects-hero h1 { font-size: 2.2rem; }
   .project-article { grid-template-columns: 1fr; }
   .project-article--reverse .project-img-wrap { order: unset; }
