@@ -3,6 +3,7 @@ const en = {
     home: 'Home',
     about: 'About',
     achievements: 'Achievements',
+    news: 'News',
     contact: 'Contact',
   },
   hero: {
@@ -48,6 +49,16 @@ const en = {
     lede: 'From the 6th House of Representatives to the 10th Senate \u2014 bills sponsored, motions moved, and committees led on behalf of the people of Kano South.',
     footnote: 'Biographical and legislative details summarised from public records, including the Senator\u2019s Wikipedia entry. For an official record of bills and motions, please contact the office.',
     loading: 'Loading\u2026',
+  },
+  news_page: {
+    eyebrow: 'News & Updates',
+    heading: 'Official updates from the office.',
+    lede: 'Press releases, statements, announcements and media coverage from the office of Sen. Kawu Sumaila.',
+    loading: 'Loading…',
+    empty: 'No news posts have been published yet. Please check back soon.',
+    read_more: 'Read more',
+    back_to_news: 'Back to News',
+    not_found: 'This news post could not be found. It may have been unpublished or removed.',
   },
   contact_page: {
     eyebrow: 'Contact',

@@ -18,6 +18,7 @@ export default function Footer() {
               <ul>
                 <li><Link to="/about">{t.nav.about}</Link></li>
                 <li><Link to="/achievements">{t.nav.achievements}</Link></li>
+                <li><Link to="/news">{t.nav.news}</Link></li>
                 <li><Link to="/contact">{t.nav.contact}</Link></li>
               </ul>
             </div>

@@ -3,6 +3,7 @@ const ha = {
     home: 'Gida',
     about: 'Bayani',
     achievements: 'Nasarori',
+    news: 'Labarai',
     contact: 'Tuntu\u0253a',
   },
   hero: {
@@ -48,6 +49,16 @@ const ha = {
     lede: 'Daga Majalisar Wakilai ta 6 zuwa Majalisar Dattawa ta 10 \u2014 kudurorin da aka gabatar, motocin da aka \u0266addamar, da kwamitin da aka jagoranta a madadin mutanen Kudu Kano.',
     footnote: 'An ta\u0253aita bayanai na tarihin rayuwa da na doka daga bayanan jama\u2019a, ciki har da shafin Wikipedia na Sanata. Don rikodin hukuma na kudurori da motoci, da fatan a tuntu\u0253i ofishi.',
     loading: 'Ana \u0257aukewa\u2026',
+  },
+  news_page: {
+    eyebrow: 'Labarai da Sabuntawa',
+    heading: 'Sanarwar hukuma daga ofishin.',
+    lede: 'Bayanan manema labarai, sanarwar hukuma, da labaran kafafen yada labarai daga ofishin San. Kawu Sumaila.',
+    loading: 'Ana ɗaukewa…',
+    empty: 'Ba a wallafa wani labari ba tukuna. Da fatan a sake dubawa nan gaba kadan.',
+    read_more: 'Karanta ɓari',
+    back_to_news: 'Koma zuwa Labarai',
+    not_found: 'Ba a sami wannan labarin ba. Watakiɓa an cire shi ko an dakatar da wallafa shi.',
   },
   contact_page: {
     eyebrow: 'Tuntu\u0253a',
