@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import SEO from '../components/SEO'
+import CountUp from '../components/CountUp'
 import { useLanguage } from '../contexts/LanguageContext'
 
 const DEFAULTS = {
@@ -9,6 +10,7 @@ const DEFAULTS = {
   home_title: 'Service to Kano South,\nfrom Sumaila to Abuja.',
   home_lede: 'Three terms in the House of Representatives. Deputy Minority Leader of the 6th and 7th Assemblies. Today, Senator for the people of Kano South.',
   home_hero_image: '/assets/rally.jpg',
+  home_constituency_projects: '0',
   home_letter_title: 'The mandate of Kano South is sacred.',
   home_letter_body: 'From Sumaila Gabas Primary School to the floor of the Senate, my journey has been shaped by the people of Kano South \u2014 by their patience, their resilience and their unshakeable belief in a better future.\n\nAcross three terms in the House of Representatives, and now in the Senate of the 10th National Assembly, the work has remained the same: bring our share of national development home, and represent our values honestly in Abuja.\n\nThis site is a record of that work, and an open door to my office.',
   home_eyebrow_ha: 'Ofishin Sanata Kawu Sumaila \u00b7 OFR',
@@ -22,6 +24,10 @@ const KEYS = Object.keys(DEFAULTS)
 
 export default function Home() {
   const [content, setContent] = useState(DEFAULTS)
+  const [heroImageReady, setHeroImageReady] = useState(false)
+  const [featuredAchievements, setFeaturedAchievements] = useState([])
+  const [billCount, setBillCount] = useState(0)
+  const [motionCount, setMotionCount] = useState(0)
   const { lang, t } = useLanguage()
 
   useEffect(() => {
@@ -31,6 +37,19 @@ export default function Home() {
         data.forEach(({ key, value }) => { map[key] = value })
         setContent(c => ({ ...c, ...map }))
       }
+      setHeroImageReady(true)
+    })
+
+    supabase.from('achievements').select('*').order('order_index', { ascending: true }).limit(3).then(({ data }) => {
+      setFeaturedAchievements(data || [])
+    })
+
+    supabase.from('achievements').select('id').eq('content_type', 'Bill').then(({ data }) => {
+      setBillCount(data?.length || 0)
+    })
+
+    supabase.from('achievements').select('id').eq('content_type', 'Motion').then(({ data }) => {
+      setMotionCount(data?.length || 0)
     })
   }, [])
 
@@ -52,7 +71,9 @@ export default function Home() {
       />
       <section className="hero">
         <div className="hero-photo-bg">
-          <img src={content.home_hero_image} alt="Senator Kawu Sumaila greeting supporters at a Waraka rally" />
+          {heroImageReady && (
+            <img src={content.home_hero_image} alt="Senator Kawu Sumaila greeting supporters at a Waraka rally" />
+          )}
         </div>
         <div className="hero-bg"></div>
         <div className="hero-bg-bottom"></div>
@@ -93,33 +114,19 @@ export default function Home() {
             <Link to="/achievements" className="ach-link">{t.home_achievements.view_all}</Link>
           </div>
           <div className="ach-grid">
-            <article className="ach-card">
-              <div className="ach-img"></div>
-              <div className="ach-content">
-                <p className="ach-cat">{t.home_achievements.card1_cat}</p>
-                <h3>{t.home_achievements.card1_title}</h3>
-                <p className="summary">{t.home_achievements.card1_summary}</p>
-                <p className="ach-period">{t.home_achievements.card1_period}</p>
-              </div>
-            </article>
-            <article className="ach-card">
-              <div className="ach-img"></div>
-              <div className="ach-content">
-                <p className="ach-cat">{t.home_achievements.card2_cat}</p>
-                <h3>{t.home_achievements.card2_title}</h3>
-                <p className="summary">{t.home_achievements.card2_summary}</p>
-                <p className="ach-period">{t.home_achievements.card2_period}</p>
-              </div>
-            </article>
-            <article className="ach-card">
-              <div className="ach-img"></div>
-              <div className="ach-content">
-                <p className="ach-cat">{t.home_achievements.card3_cat}</p>
-                <h3>{t.home_achievements.card3_title}</h3>
-                <p className="summary">{t.home_achievements.card3_summary}</p>
-                <p className="ach-period">{t.home_achievements.card3_period}</p>
-              </div>
-            </article>
+            {featuredAchievements.map((a) => (
+              <article className="ach-card" key={a.slug}>
+                <div className="ach-img">
+                  {a.image && <img src={a.image} alt={a.title} loading="lazy" />}
+                </div>
+                <div className="ach-content">
+                  <p className="ach-cat">{a.category}</p>
+                  <h3>{a.title}</h3>
+                  <p className="summary">{a.summary}</p>
+                  <p className="ach-period">{a.period}</p>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
@@ -142,6 +149,27 @@ export default function Home() {
           <div className="stat">
             <div className="n">OFR</div>
             <div className="l">{t.stats.honour}</div>
+          </div>
+        </div>
+      </section>
+
+      <section className="legislative-record">
+        <div className="container">
+          <p className="label" style={{ color: '#8b0000' }}>{t.legislative_record.label}</p>
+          <h2>{t.legislative_record.heading}</h2>
+          <div className="record-grid">
+            <div className="record-stat">
+              <div className="n"><CountUp end={billCount} /></div>
+              <div className="l">{t.legislative_record.bills}</div>
+            </div>
+            <div className="record-stat">
+              <div className="n"><CountUp end={motionCount} /></div>
+              <div className="l">{t.legislative_record.motions}</div>
+            </div>
+            <div className="record-stat">
+              <div className="n"><CountUp end={Number(content.home_constituency_projects) || 0} /></div>
+              <div className="l">{t.legislative_record.projects}</div>
+            </div>
           </div>
         </div>
       </section>
