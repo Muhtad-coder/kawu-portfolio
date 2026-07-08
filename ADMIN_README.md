@@ -121,6 +121,9 @@ Go to **Admin → Achievements**
 ### Reordering achievements
 Edit each achievement and update the **Order** number. Lower numbers appear first.
 
+### Homepage "Selected achievements"
+The 3 achievements with the lowest **Order** number also appear in the "Selected achievements" section on the homepage — reordering achievements here controls both places at once. There's no separate setting for the homepage.
+
 ---
 
 ## Managing News
@@ -223,6 +226,11 @@ Go to **Admin → Home Page**
 ### Letter Section
 - **Letter title** — the "note from the Senator" heading
 - **Letter body** — the letter text. Separate paragraphs with a blank line.
+
+### Legislative Record
+A "by the numbers" section on the homepage, with each number counting up from 0 when scrolled into view.
+- **Bills Sponsored** and **Motions Sponsored** are automatic — they count achievements tagged `Bill` / `Motion` (via the Content Type field in **Admin → Achievements**). No setting here controls them.
+- **Constituency projects completed** is the one manually-typed number in this section.
 
 Click **Save Changes** when done.
 
