@@ -294,23 +294,58 @@ footer { background: var(--background); padding: 3.5rem 0 2.5rem; border-top: 1p
   nav { display: none; }
   .header-right { display: flex; }
   .hamburger { display: flex; }
+
+  /* Hero */
   .hero-inner { padding-top: 2.5rem; padding-bottom: 2.5rem; min-height: 60vh; }
   .hero-inner > div { max-width: 100%; }
-  .letter { grid-template-columns: 1fr; }
+
+  /* Letter */
+  .letter { grid-template-columns: 1fr; padding-block: 3rem; gap: 1.5rem; }
+  .letter h2 { font-size: 1.75rem; }
+  .letter-body { font-size: 1rem; }
+
+  /* Achievements section (home) */
+  .achievements { padding: 3rem 0; }
+  .ach-head h2 { font-size: 1.75rem; }
   .ach-grid { grid-template-columns: 1fr; }
+
+  /* Stats */
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
-  .about-grid { grid-template-columns: 1fr; padding: 3rem 0; }
-  .about-content h1.about-title { font-size: 2.1rem; }
+
+  /* About */
+  .about-grid { grid-template-columns: 1fr; padding: 2.5rem 0; }
+  .about-content h1.about-title { font-size: 1.9rem; }
+  .about-body { font-size: 1rem; }
   .info-grid { grid-template-columns: 1fr; }
-  .contact-page { grid-template-columns: 1fr; padding: 3rem 0; gap: 2.5rem; }
-  .contact-title { font-size: 2.1rem; }
-  .contact-form { padding: 1.5rem; }
-  .projects-hero h1 { font-size: 2.2rem; }
-  .project-article { grid-template-columns: 1fr; }
+
+  /* Contact */
+  .contact-page { grid-template-columns: 1fr; padding: 2.5rem 0; gap: 2rem; }
+  .contact-title { font-size: 1.9rem; }
+  .contact-lede { font-size: 1rem; }
+  .contact-form { padding: 1.25rem; }
+
+  /* Projects / Achievements page */
+  .projects-hero-inner { padding-block: 2.5rem 2rem; }
+  .projects-hero h1 { font-size: 1.9rem; }
+  .projects-lede { font-size: 1rem; }
+  .projects-list { padding-block: 3rem; }
+  .projects-articles { gap: 3rem; }
+  .project-article { grid-template-columns: 1fr; gap: 1.5rem; }
   .project-article--reverse .project-img-wrap { order: unset; }
   .project-article--reverse .project-body { order: unset; }
+  .project-title { font-size: 1.6rem; }
+  .project-summary { font-size: 1rem; }
+
+  /* News */
+  .news-list { padding-block: 3rem; }
   .news-grid { grid-template-columns: 1fr; }
-  .news-detail-title { font-size: 1.9rem; }
+  .news-detail { padding-block: 2.5rem 3.5rem; }
+  .news-detail-title { font-size: 1.75rem; }
+  .news-detail-body { font-size: 1rem; }
+
+  /* Footer */
+  .footer-nav { gap: 2rem; }
+  footer { padding: 2.5rem 0 1.75rem; }
 }
 
 /* HERO: narrow/portrait viewports start cropping the photo horizontally
@@ -339,4 +374,21 @@ footer { background: var(--background); padding: 3.5rem 0 2.5rem; border-top: 1p
   .hero-photo-bg img { object-position: 76% 60%; }
   .hero-bg-bottom { background: linear-gradient(0deg, #1c1310 0%, rgba(28,19,16,0) 60%); }
   .hero-cta .btn { padding: 0.7rem 1.3rem; font-size: 0.76rem; }
+
+  /* Tighten further on small phones */
+  .brand-name { font-size: 1rem; }
+  .letter { padding-block: 2.5rem; }
+  .letter h2 { font-size: 1.5rem; }
+  .achievements { padding: 2.5rem 0; }
+  .ach-head h2 { font-size: 1.5rem; }
+  .ach-content h3 { font-size: 1.15rem; }
+  .about-content h1.about-title { font-size: 1.65rem; }
+  .contact-title { font-size: 1.65rem; }
+  .projects-hero h1 { font-size: 1.65rem; }
+  .project-title { font-size: 1.4rem; }
+  .news-detail-title { font-size: 1.5rem; }
+  .projects-chips { gap: 0.4rem; }
+  .chip { font-size: 0.72rem; padding: 0.4rem 0.8rem; }
+  .footer-nav { flex-direction: column; gap: 1.5rem; }
+  footer { padding: 2rem 0 1.5rem; }
 }
