@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useRef } from 'react'
 import { supabase } from '../../lib/supabase'
 import ImageCropper from '../../components/ImageCropper'
 
@@ -30,6 +30,8 @@ export default function AdminAchievements() {
   const [error, setError] = useState('')
   const [cropSrc, setCropSrc] = useState(null)
   const [croppedBlob, setCroppedBlob] = useState(null)
+  const [dragOverId, setDragOverId] = useState(null)
+  const dragId = useRef(null)
 
   useEffect(() => { load() }, [])
 
@@ -40,8 +42,9 @@ export default function AdminAchievements() {
   }
 
   async function uploadImage(blob, filename) {
-    const path = `achievements/${Date.now()}-${filename}`
-    const { error } = await supabase.storage.from('site-images').upload(path, blob, { contentType: 'image/jpeg' })
+    const base = filename.replace(/\.[^.]+$/, '')
+    const path = `achievements/${Date.now()}-${base}.webp`
+    const { error } = await supabase.storage.from('site-images').upload(path, blob, { contentType: 'image/webp' })
     if (error) return null
     const { data } = supabase.storage.from('site-images').getPublicUrl(path)
     return data.publicUrl
@@ -114,6 +117,35 @@ export default function AdminAchievements() {
     setError('')
   }
 
+  function handleDragStart(id) {
+    dragId.current = id
+  }
+
+  function handleDragOver(e, id) {
+    e.preventDefault()
+    setDragOverId(id)
+  }
+
+  async function handleDrop(e, targetId) {
+    e.preventDefault()
+    setDragOverId(null)
+    if (!dragId.current || dragId.current === targetId) return
+
+    const reordered = [...achievements]
+    const fromIdx = reordered.findIndex(a => a.id === dragId.current)
+    const toIdx = reordered.findIndex(a => a.id === targetId)
+    const [moved] = reordered.splice(fromIdx, 1)
+    reordered.splice(toIdx, 0, moved)
+
+    const updated = reordered.map((a, i) => ({ ...a, order_index: i }))
+    setAchievements(updated)
+    dragId.current = null
+
+    await Promise.all(updated.map(a =>
+      supabase.from('achievements').update({ order_index: a.order_index }).eq('id', a.id)
+    ))
+  }
+
   if (loading) return <p>Loading...</p>
 
   return (
@@ -169,9 +201,6 @@ export default function AdminAchievements() {
             <input type="file" accept="image/*" onChange={handleFileSelect} />
             {croppedBlob && <p style={{ fontSize: '0.82rem', color: 'green', marginTop: '0.4rem' }}>Image cropped and ready to upload.</p>}
           </Field>
-          <Field label="Order (lower = appears first)">
-            <input type="number" value={form.order_index} onChange={e => setForm(f => ({ ...f, order_index: e.target.value }))} style={{ ...inputStyle, width: '120px' }} />
-          </Field>
           <div style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem' }}>
             <button type="submit" disabled={saving} style={btn('#8b0000')}>{saving ? 'Saving...' : 'Save'}</button>
             <button type="button" onClick={handleCancel} style={btn('#555')}>Cancel</button>
@@ -179,12 +208,36 @@ export default function AdminAchievements() {
         </form>
       )}
 
+      <p style={{ fontSize: '0.82rem', color: '#888', marginBottom: '0.75rem' }}>Drag rows to reorder. Changes save automatically.</p>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
         {achievements.map(a => (
-          <div key={a.id} style={{ background: '#fff', padding: '1.25rem 1.5rem', borderRadius: '8px', boxShadow: '0 1px 4px rgba(0,0,0,0.08)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
-            <div>
-              <p style={{ fontWeight: 600, marginBottom: '0.2rem' }}>{a.title}</p>
-              <p style={{ color: '#666', fontSize: '0.83rem' }}>{a.category} · {a.content_type || 'No type'} · {a.period} · Order: {a.order_index}</p>
+          <div
+            key={a.id}
+            draggable
+            onDragStart={() => handleDragStart(a.id)}
+            onDragOver={e => handleDragOver(e, a.id)}
+            onDrop={e => handleDrop(e, a.id)}
+            onDragLeave={() => setDragOverId(null)}
+            style={{
+              background: '#fff',
+              padding: '1.25rem 1.5rem',
+              borderRadius: '8px',
+              boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              gap: '1rem',
+              border: dragOverId === a.id ? '2px dashed #8b0000' : '2px solid transparent',
+              cursor: 'grab',
+              transition: 'border-color 0.15s',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <span style={{ color: '#bbb', fontSize: '1.1rem', lineHeight: 1, userSelect: 'none' }}>⠿</span>
+              <div>
+                <p style={{ fontWeight: 600, marginBottom: '0.2rem' }}>{a.title}</p>
+                <p style={{ color: '#666', fontSize: '0.83rem' }}>{a.category} · {a.content_type || 'No type'} · {a.period}</p>
+              </div>
             </div>
             <div style={{ display: 'flex', gap: '0.5rem', flexShrink: 0 }}>
               <button onClick={() => handleEdit(a)} style={smallBtn('#444')}>Edit</button>

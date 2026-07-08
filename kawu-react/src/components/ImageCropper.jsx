@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react'
 import Cropper from 'react-easy-crop'
 
+const MAX_DIMENSION = 1200
+
 async function getCroppedBlob(imageSrc, pixelCrop) {
   const image = await new Promise((resolve, reject) => {
     const img = new Image()
@@ -9,24 +11,23 @@ async function getCroppedBlob(imageSrc, pixelCrop) {
     img.src = imageSrc
   })
 
+  // Scale down if crop exceeds max dimension
+  let outW = pixelCrop.width
+  let outH = pixelCrop.height
+  if (outW > MAX_DIMENSION || outH > MAX_DIMENSION) {
+    const ratio = Math.min(MAX_DIMENSION / outW, MAX_DIMENSION / outH)
+    outW = Math.round(outW * ratio)
+    outH = Math.round(outH * ratio)
+  }
+
   const canvas = document.createElement('canvas')
-  canvas.width = pixelCrop.width
-  canvas.height = pixelCrop.height
+  canvas.width = outW
+  canvas.height = outH
   const ctx = canvas.getContext('2d')
 
-  ctx.drawImage(
-    image,
-    pixelCrop.x,
-    pixelCrop.y,
-    pixelCrop.width,
-    pixelCrop.height,
-    0,
-    0,
-    pixelCrop.width,
-    pixelCrop.height,
-  )
+  ctx.drawImage(image, pixelCrop.x, pixelCrop.y, pixelCrop.width, pixelCrop.height, 0, 0, outW, outH)
 
-  return new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg', 0.92))
+  return new Promise((resolve) => canvas.toBlob(resolve, 'image/webp', 0.85))
 }
 
 export default function ImageCropper({ imageSrc, aspect, onConfirm, onCancel }) {
