@@ -31,7 +31,7 @@ em { font-style: italic; }
 
 /* HEADER */
 header { border-bottom: 1px solid var(--border); background: var(--background); }
-.header-inner { display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 0; }
+.header-inner { display: flex; align-items: center; justify-content: space-between; padding-block: 1.1rem; }
 .brand { display: flex; flex-direction: column; line-height: 1.15; }
 .brand-name { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.15rem; }
 .brand-waraka { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.32em; text-transform: uppercase; color: var(--primary); margin-top: 3px; }
@@ -366,9 +366,9 @@ footer { background: var(--background); padding: 3.5rem 0 2.5rem; border-top: 1p
 @media (max-width: 768px) {
   .hero-photo-bg img { object-position: 72% 64%; }
   .hero-inner {
-    min-height: 75vh;
-    padding-top: 64px;
-    padding-bottom: 64px;
+    min-height: 64vh;
+    padding-top: 48px;
+    padding-bottom: 48px;
     padding-left: 20px;
     padding-right: 20px;
   }
