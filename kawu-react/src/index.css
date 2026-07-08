@@ -219,6 +219,19 @@ footer { background: var(--background); padding: 3.5rem 0 2.5rem; border-top: 1p
 .video-wrapper { position: relative; width: 100%; aspect-ratio: 16/9; overflow: hidden; margin-top: 2.5rem; background: var(--secondary); }
 .video-wrapper iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
+/* SKELETONS */
+@keyframes shimmer {
+  0% { background-position: -600px 0; }
+  100% { background-position: 600px 0; }
+}
+.skel {
+  display: block;
+  background: linear-gradient(90deg, #ede8e0 25%, #ddd6ca 50%, #ede8e0 75%);
+  background-size: 1200px 100%;
+  animation: shimmer 1.5s infinite linear;
+  border-radius: 2px;
+}
+
 /* LANGUAGE TOGGLE */
 .lang-toggle {
   background: none;

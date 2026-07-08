@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import SEO from '../components/SEO'
 import { useLanguage } from '../contexts/LanguageContext'
+import { ProjectArticleSkeleton } from '../components/Skeleton'
 
 function CheckIcon() {
   return (
@@ -64,7 +65,11 @@ export default function Projects() {
 
       <section className="container projects-list">
         {loading ? (
-          <p>{t.projects_page.loading}</p>
+          <div className="projects-articles">
+            <ProjectArticleSkeleton />
+            <ProjectArticleSkeleton reverse />
+            <ProjectArticleSkeleton />
+          </div>
         ) : (
           <>
             <div className="projects-chips">

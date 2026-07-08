@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase'
 import SEO from '../components/SEO'
 import { useLanguage } from '../contexts/LanguageContext'
 import { getYouTubeId } from '../lib/youtube'
+import { NewsDetailSkeleton } from '../components/Skeleton'
 
 export default function NewsDetail() {
   const { slug } = useParams()
@@ -29,11 +30,7 @@ export default function NewsDetail() {
   }, [slug])
 
   if (loading) {
-    return (
-      <section className="container news-detail">
-        <p>{t.news_page.loading}</p>
-      </section>
-    )
+    return <NewsDetailSkeleton />
   }
 
   if (!post) {

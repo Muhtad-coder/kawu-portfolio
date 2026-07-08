@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import SEO from '../components/SEO'
 import { useLanguage } from '../contexts/LanguageContext'
+import { NewsCardSkeleton } from '../components/Skeleton'
 
 export default function News() {
   const [posts, setPosts] = useState([])
@@ -42,7 +43,11 @@ export default function News() {
 
       <section className="container news-list">
         {loading ? (
-          <p>{t.news_page.loading}</p>
+          <div className="news-grid">
+            <NewsCardSkeleton />
+            <NewsCardSkeleton />
+            <NewsCardSkeleton />
+          </div>
         ) : posts.length === 0 ? (
           <p className="news-empty">{t.news_page.empty}</p>
         ) : (
