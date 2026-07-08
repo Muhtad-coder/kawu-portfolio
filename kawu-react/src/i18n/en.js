@@ -53,7 +53,7 @@ const en = {
     filter_bill: 'Bill',
     filter_motion: 'Motion',
     filter_petition: 'Petition',
-    filter_committee: 'Committee Work',
+    filter_committee: 'Constituency Project',
     no_results: 'No achievements match this filter yet.',
   },
   news_page: {

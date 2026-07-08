@@ -21,8 +21,8 @@ function CheckIcon() {
   )
 }
 
-const CONTENT_TYPES = ['All', 'Bill', 'Motion', 'Petition', 'Committee Work']
-const CONTENT_TYPE_KEYS = { All: 'filter_all', Bill: 'filter_bill', Motion: 'filter_motion', Petition: 'filter_petition', 'Committee Work': 'filter_committee' }
+const CONTENT_TYPES = ['All', 'Bill', 'Motion', 'Petition', 'Constituency Project']
+const CONTENT_TYPE_KEYS = { All: 'filter_all', Bill: 'filter_bill', Motion: 'filter_motion', Petition: 'filter_petition', 'Constituency Project': 'filter_committee' }
 
 export default function Projects() {
   const [achievements, setAchievements] = useState([])

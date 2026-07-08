@@ -16,7 +16,7 @@ function Field({ label, hint, children }) {
   )
 }
 
-const CONTENT_TYPES = ['Bill', 'Motion', 'Petition', 'Committee Work']
+const CONTENT_TYPES = ['Bill', 'Motion', 'Petition', 'Constituency Project']
 
 const emptyForm = { slug: '', category: '', title: '', period: '', summary: '', impact: '', image: '', order_index: 0, content_type: '' }
 

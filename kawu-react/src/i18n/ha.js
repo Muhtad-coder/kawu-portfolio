@@ -53,7 +53,7 @@ const ha = {
     filter_bill: 'Kudiri',
     filter_motion: 'Motsi',
     filter_petition: 'Koke',
-    filter_committee: 'Aikin Kwamiti',
+    filter_committee: 'Aikin Mazabar',
     no_results: 'Babu wata nasara da ta dace da wannan tacewa tukuna.',
   },
   news_page: {
